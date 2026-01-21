@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>inline critical CSS example</title>
     <!-- Preload font early -->
-    <link rel="preload" href="/assets/fonts/poppins-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/poppins-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin />
     <!-- 1. Bootstrap (external, non-blocking) -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" /> </noscript>
@@ -3851,12 +3851,16 @@
         </div>
       </div>
     </div>
-       <picture>
-      <!-- <source srcset="assets/images/shield-red.svg" media="(prefers-color-scheme: light)" /> -->
-      <source srcset="assets/images/shield-white.png" media="(prefers-color-scheme: dark)" />
-      <!-- <img type="image/svg+xml" src="assets/images/shield-red.svg" alt="red shield" width="200" height="100" /> -->
-      <img src="assets/images/shield-red.png" alt="red shield" />
+
+    <picture>
+      <!-- Dark mode -->
+      <source srcset="assets/images/shield-white.png" media="(prefers-color-scheme: dark)">
+      <!-- Light mode -->
+      <source srcset="assets/images/shield-red.png" media="(prefers-color-scheme: light)">
+      <img src="assets/images/shield-red.png" alt="Site logo">
     </picture>
+
+
     <!-- hero -->
     <picture>
       <!-- <source type="image/avif" srcset="assets/images/hero-desktop-orig-jpg.avif 1200w, assets/images/hero-mobile.avif 800w" />
