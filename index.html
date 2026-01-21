@@ -3852,46 +3852,29 @@
       </div>
     </div>
 
+    <!-- test images for dark mode -->
     <picture>
-      <!-- Dark mode -->
       <source srcset="assets/images/shield-white.png" media="(prefers-color-scheme: dark)">
-      <!-- Light mode -->
       <source srcset="assets/images/shield-red.png" media="(prefers-color-scheme: light)">
       <img src="assets/images/shield-red.png" alt="Site logo">
     </picture>
 
 
+
     <!-- hero -->
     <picture>
       <!-- <source type="image/avif" srcset="assets/images/hero-desktop-orig-jpg.avif 1200w, assets/images/hero-mobile.avif 800w" />
-            <source type="image/webp" srcset="assets/images/hero-desktop-orig-jpg.webp 1200w, assets/images/hero-mobile.webp 800w" />
-            <source type="image/avif" srcset="assets/images/hero-desktop-orig-jpg.avif 1200w, assets/images/hero-mobile.avif 800w" /> -->
-
-      <!-- <source srcset="assets/images/hero-desktop-orig-jpg.avif" type="image/avif" />
-      <source srcset="assets/images/hero-desktop-orig-png.avif" type="image/avif" />
-      <source srcset="assets/images/hero-desktop-orig-png.webp" type="image/webp" />
-      <source srcset="assets/images/hero-mobile.avif" type="image/avif" media="(max-width: 600px)" />
-      <source srcset="assets/images/hero-mobile.jpg" type="image/jpeg" media="(max-width: 600px)" />
-      <source srcset="assets/images/hero-mobile.webp" type="image/webp" media="(max-width: 600px)" />
-
-      <img fetchpriority="high" src="assets/images/hero-desktop-orig-jpg.jpg" alt="desktop hero" /> -->
-
-
-        <!-- Mobile first -->
-        <source srcset="assets/images/hero-mobile.avif" type="image/avif" media="(max-width: 600px)" />
-        <source srcset="assets/images/hero-mobile.webp" type="image/webp" media="(max-width: 600px)" />
-        <source srcset="assets/images/hero-mobile.jpg" type="image/jpeg" media="(max-width: 600px)" />
-
-        <!-- Desktop -->
-           <source srcset="assets/images/hero-desktop-orig-jpg.webp" type="image/webp" />
-        <source srcset="assets/images/hero-desktop-orig-jpg.avif" type="image/avif" />
-      
-
-        <!-- Fallback -->
-        <img fetchpriority="high" src="assets/images/hero-desktop-orig-jpg.jpg" alt="Hero image" />
-      </picture>
-
- 
+              <source type="image/webp" srcset="assets/images/hero-desktop-orig-jpg.webp 1200w, assets/images/hero-mobile.webp 800w" />
+              <source type="image/avif" srcset="assets/images/hero-desktop-orig-jpg.avif 1200w, assets/images/hero-mobile.avif 800w" /> -->
+    
+      <!-- Mobile first -->
+      <source srcset="assets/images/hero-mobile.webp" type="image/webp" media="(max-width: 600px)" alt="Hero image" />
+      <!-- Desktop -->
+      <source srcset="assets/images/hero.webp" type="image/webp" alt="Hero image" />
+      <!-- Fallback -->
+      <img fetchpriority="high" src="assets/images/hero.jpg" alt="Hero image" />
+    </picture>
+    
     <div id="mcafeeHeroCarousel" class="carousel slide carousel-fade no-min-height" data-bs-ride="carousel">
       <div class="d-none"></div>
       <div class="carousel-inner">
