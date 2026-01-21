@@ -1,0 +1,3951 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>inline critical CSS example</title>
+    <!-- Preload font early -->
+    <link rel="preload" href="/assets/fonts/poppins-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- 1. Bootstrap (external, non-blocking) -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" /> </noscript>
+    <!-- 2. Inline critical CSS -->
+    <style>
+      :root {
+        --Gap: 1rem;
+        --GutterSm: 0.75rem;
+        --Gutter: clamp(1.25rem, 1.673vw + 0.715rem, 3rem);
+        --ContentSpacer: 1.5rem;
+        --SectionSpacer: clamp(1.5rem, 1.554vw + 1.003rem, 3.125rem);
+        --SectionHdrSpacer: 2.5rem;
+        --SpacerXs: 0.5rem;
+        --SpacerSm: 0.75rem;
+        --Spacer: 1rem;
+        --SpacerLg: 1.25rem;
+        --SpacerXl: 1.5rem;
+        --SpacerXxl: 2rem;
+        --SpacerXxxl: clamp(1.75rem, 1.195vw + 1.368rem, 3rem);
+        --RadiusXxs: 0.375rem;
+        --RadiusXs: 0.5rem;
+        --RadiusSm: 0.75rem;
+        --Radius: 1rem;
+        --RadiusLg: 1.25rem;
+        --RadiusXl: 1.5rem;
+        --RadiusXxl: 2rem;
+        --ShadowSm: 2px 2px 2px 0px rgba(0, 0, 0, 0.12), -0.25px -0.25px 1px 0px rgba(0, 0, 0, 0.06), 1px 1px 8px 0px rgba(0, 0, 0, 0.06);
+        --Shadow: 1px 1px 16px 0px rgba(0, 0, 0, 0.06), 4px 4px 12px 0px rgba(0, 0, 0, 0.12);
+        --FontWeightBold: 600;
+        --PipeColor: #6c757d;
+        --IcnGuarantee: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%233da288' viewBox='0 0 16 16'><path d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z'/></svg>");
+        --IcnPlayBtn: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='10' stroke='%23343434' stroke-width='2'/%3E%3Cpath d='m16.293 11.293-4.586-4.586c-.63-.63-1.707-.184-1.707.707v9.172c0 .89 1.077 1.337 1.707.707l4.586-4.586a1 1 0 0 0 0-1.414Z' stroke='%23343434' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E");
+        --IcnCarousel: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19.703 12.707 18.996 12l.707.707Zm0-1.414-.707.707.707-.707ZM20 13H4v-2h16v2Zm-7.797 5.793L18.996 12l1.414 1.414-6.793 6.793-1.414-1.414ZM18.996 12l-6.793-6.793 1.414-1.414 6.793 6.793L18.996 12Zm0 0 1.414-1.414a2 2 0 0 1 0 2.828L18.996 12Z' fill='%236E6E6E'/%3E%3C/svg%3E");
+        --IcnCarousel2: url("data:image/svg+xml,%3Csvg width='48' height='48' viewBox='0 0 48 48' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='24' cy='24' r='24' fill='%23F2F2F2'/%3E%3Cpath d='M31.703 24.707 30.996 24l.707.707Zm0-1.414-.707.707.707-.707ZM32 25H16v-2h16v2Zm-7.797 5.793L30.996 24l1.414 1.414-6.793 6.793-1.414-1.414ZM30.996 24l-6.793-6.793 1.414-1.414 6.793 6.793L30.996 24Zm0 0 1.414-1.414a2 2 0 0 1 0 2.828L30.996 24Z' fill='%23343434'/%3E%3C/svg%3E");
+        --AccordionFontWeight: 600;
+        --AccordionHdrSpacer: 1rem;
+        --AccordionItemsFontSize: 1rem;
+        --AccordionToggleSize: 24px;
+        --AccordionToggleWeight: 600;
+        --BadgeAttentionBackgroundColor: #ff1c1c;
+        --BadgeAttentionBorderColor: transparent;
+        --BadgeAttentionTextColor: #fff;
+        --BadgePromoBackgroundColor: #c01818;
+        --BadgePromoBorderColor: transparent;
+        --BadgePromoTextColor: #fff;
+        --CollapseCardTitlePadding: 0 0.75rem 0.25rem;
+        --ExpiryBackgroundColor: #fde8e2;
+        --FooterTrademarksFontSize: 0.75rem;
+        --PriceRowFinalColor: #000000;
+        --PriceRowFinalFontSize: 1.5rem;
+        --PriceRowFinalFontWeight: 600;
+        --PriceRowRetailColor: #a19c9c;
+        --PriceRowRetailFontSize: 1.25rem;
+        --PriceRowRetailFontWeight: 400;
+        --PriceRowDiscountColor: #ff1c1c;
+        --PriceRowDiscountFontSize: 0.875rem;
+        --PriceRowDiscountFontWeight: 600;
+        --PriceRowDiscountDescColor: #ff1c1c;
+        --PriceRowDiscountDescFontSize: 0.875rem;
+        --PriceRowDiscountDescFontWeight: 600;
+        --PriceRowPlanDescColor: #000000;
+        --PriceRowPlanDescFontSize: 0.875rem;
+        --PriceRowPlanDescFontWeight: 400;
+        --PriceBlockFinalColor: #000000;
+        --PriceBlockFinalFontSize: 1.5rem;
+        --PriceBlockFinalFontWeight: 400;
+        --PriceBlockRetailColor: #000000;
+        --PriceBlockRetailFontSize: 0.75rem;
+        --PriceBlockRetailFontWeight: 400;
+        --PriceBlockDiscountColor: #c01818;
+        --PriceBlockDiscountFontSize: 0.875rem;
+        --PriceBlockDiscountFontWeight: 600;
+        --PriceBlockDiscountDescColor: #c01818;
+        --PriceBlockDiscountDescFontSize: 0.875rem;
+        --PriceBlockDiscountDescFontWeight: 600;
+        --PriceBlockPlanDescColor: #000000;
+        --PriceBlockPlanDescFontSize: 0.875rem;
+        --PriceBlockPlanDescFontWeight: 600;
+        --ProgressBarSuccessShapeColor: #24bc98;
+        --ProgressBarBorderRadius: 0.125rem;
+        --RadioBtnBadgeFontSize: 11px;
+        --RadioBtnPadding: 1rem;
+        --RadioBtnBackgroundColor: #f9f1ec;
+        --ToggleThickness: 2px;
+        --ToggleWidth: 10px;
+        --ToggleHeight: 10px;
+        --ToggleColor: #000000;
+        --ToggleWidthSm: 7px;
+        --ToggleHeightSm: 7px;
+        --ToggleThicknessSm: 2px;
+        --PopoverBg: #fff;
+        --PopoverFontSize: 0.75rem;
+        --PopoverIcon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='11' fill='none'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath d='M4.873 4.444a1.307 1.307 0 0 1 2.54.436c0 .87-1.307 1.306-1.307 1.306m.035 1.743h.004m4.352-2.178a4.356 4.356 0 1 1-8.712 0 4.356 4.356 0 0 1 8.712 0Z' stroke='%234258FF' stroke-width='.871' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' transform='translate(.914 .524)' d='M0 0h10.454v10.454H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+        --PopoverIconWidth: 0.75rem;
+        --PopoverIconHeight: 0.688rem;
+        --AccordionCollapseBackgroundColor: rgba(0, 0, 0, 0);
+        --AccordionCollapseBorderColor: rgba(0, 0, 0, 0.175);
+        --AccordionCollapseTextColor: #000000;
+        --AccordionExpandBackgroundColor: rgba(0, 0, 0, 0);
+        --AccordionExpandTextColor: #000000;
+        --AlertBannerBackgroundColor: rgba(255, 255, 255, 0.33);
+        --AlertBannerDarkBackgroundColor: #343434;
+        --AlertBannerDarkBorderColor: rgba(0, 0, 0, 0);
+        --AlertBannerDarkTextColor: #ffffff;
+        --AlertBannerBorderWidth: 0.0625rem;
+        --AlertBannerInfoBackgroundColor: #4258ff;
+        --AlertBannerInfoBorderColor: rgba(0, 0, 0, 0);
+        --AlertBannerInfoTextColor: #ffffff;
+        --AlertBannerErrorBackgroundColor: #ff1c1c;
+        --AlertBannerErrorBorderColor: rgba(0, 0, 0, 0);
+        --AlertBannerErrorTextColor: #ffffff;
+        --AlertBannerWarningBackgroundColor: #ff7900;
+        --AlertBannerWarningBorderColor: rgba(0, 0, 0, 0);
+        --AlertBannerWarningTextColor: #ffffff;
+        --AlertBannerBorder: 0;
+        --AlertBannerBorderRadius: 1rem;
+        --AlertBannerAlignitems: center;
+        --AlertBannerPromoBackgroundColor: linear-gradient(90deg, #ff3838 37.62%, #c90063 84.8%);
+        --AlertBannerPromoBorderColor: transparent;
+        --AlertBannerPromoTextColor: #ffffff;
+        --AlertBannerMargin: 1rem 1.5rem 1.5rem;
+        --AlertBannerSuccessBackgroundColor: #24bc98;
+        --AlertBannerSuccessTextColor: #fff;
+        --AlertBannerSuccessBorderColor: transparent;
+        --BackgroundColor: #fafafa;
+        --BackgroundBackgroundColor: #ffffff;
+        --BackgroundSecondaryBackgroundColor: #f9fafb;
+        --BackgroundTertiaryBackgroundColor: #f2f2f2;
+        --BackgroundQuaternaryBackgroundColor: linear-gradient(180deg, #f6f6f6 0%, #ededed 100%);
+        --BackgroundDarkTertiaryBackgroundColor: linear-gradient(354.33deg, #e9e8e7 0%, #ffffff 100%);
+        --BackgroundDarkSecondaryBackgroundColor: #343434;
+        --BackgroundAccentBackgroundColor: #f9f1ec;
+        --BackgroundAccentPromoBackgroundColor: linear-gradient(137.29deg, #ff1c1c 0%, #f07570 0.01%, #c52d42 95.31%);
+        --BadgeBackgroundColor: #000000;
+        --BadgeBorderColor: rgba(0, 0, 0, 0);
+        --BadgeTextColor: #ffffff;
+        --BadgePrimaryBackgroundColor: #ff1c1c;
+        --BadgePrimaryBorderColor: rgba(0, 0, 0, 0);
+        --BadgePrimaryTextColor: #ffffff;
+        --BadgeSuccessBackgroundColor: #3da288;
+        --BadgeSuccessBorderColor: rgba(0, 0, 0, 0);
+        --BadgeSuccessTextColor: #ffffff;
+        --BadgeInfoBackgroundColor: #4258ff;
+        --BadgeInfoBorderColor: rgba(0, 0, 0, 0);
+        --BadgeInfoTextColor: #ffffff;
+        --BadgeLightBackgroundColor: #ffffff;
+        --BadgeLightBorderColor: rgba(0, 0, 0, 0);
+        --BadgeLightTextColor: #ff1c1c;
+        --BadgeWarningBackgroundColor: #ffe3c2;
+        --BadgeWarningBorderColor: rgba(0, 0, 0, 0);
+        --BadgeWarningTextColor: #343434;
+        --BrandMcafeeColor: #ff1c1c;
+        --BrandMcafeeDarkColor: #000000;
+        --BrandMcafeeLightColor: #ffffff;
+        --ButtonBackgroundColor: #ff1c1c;
+        --ButtonTextColor: #ffffff;
+        --ButtonHoverBackgroundColor: #c01818;
+        --ButtonHoverBorderColor: #c01818;
+        --ButtonHoverTextColor: #ffffff;
+        --ButtonPressedBackgroundColor: #c01818;
+        --ButtonPressedBorderColor: rgba(0, 0, 0, 0);
+        --ButtonPressedTextColor: #ffffff;
+        --ButtonSuccessBackgroundColor: #24bc98;
+        --ButtonSuccessTextColor: #ffffff;
+        --ButtonSuccessHoverBackgroundColor: #29d6ac;
+        --ButtonSuccessHoverBorderColor: #29d6ac;
+        --ButtonSuccessHoverTextColor: #ffffff;
+        --ButtonSuccessPressedBackgroundColor: #3da288;
+        --ButtonSuccessPressedBorderColor: #3da288;
+        --ButtonSuccessPressedTextColor: #ffffff;
+        --ButtonDarkBackgroundColor: #454545;
+        --ButtonDarkTextColor: #ffffff;
+        --ButtonDarkHoverBackgroundColor: #6e6e6e07;
+        --ButtonDarkHoverBorderColor: #6e6e6e;
+        --ButtonDarkHoverTextColor: #ffffff;
+        --ButtonDarkPressedBackgroundColor: #343434;
+        --ButtonDarkPressedBorderColor: #343434;
+        --ButtonDarkPressedTextColor: #ffffff;
+        --ButtonLightBackgroundColor: #ffffff;
+        --ButtonLightTextColor: #000000;
+        --ButtonLightHoverBackgroundColor: #ffffff;
+        --ButtonLightHoverBorderColor: #ffffff;
+        --ButtonLightHoverTextColor: #000000;
+        --ButtonLightPressedBackgroundColor: #ffffff;
+        --ButtonLightPressedTextColor: #000000;
+        --ButtonDisabledBackgroundColor: #e8e8e8;
+        --ButtonDisabledBorderColor: #e8e8e8;
+        --ButtonDisabledTextColor: #a19c9c;
+        --ButtonSecondaryBackgroundColor: transparent;
+        --ButtonSecondaryTextColor: #454545;
+        --ButtonSecondaryHoverBackgroundColor: #e80000;
+        --ButtonSecondaryHoverBorderColor: #e80000;
+        --ButtonSecondaryHoverTextColor: #ffffff;
+        --ButtonSecondaryPressedBackgroundColor: #e8e8e8;
+        --ButtonSecondaryPressedBorderColor: #6e6e6e;
+        --ButtonSecondaryPressedTextColor: #454545;
+        --ButtonSecondaryDisabledBackgroundColor: rgba(0, 0, 0, 0);
+        --ButtonSecondaryDisabledBorderColor: #dbdbdb;
+        --ButtonSecondaryDisabledTextColor: #a19c9c;
+        --ButtonTertiaryTextColor: #ff1c1c;
+        --ButtonTertiaryHoverTextColor: #ff615c;
+        --ButtonTertiaryDisabledTextColor: #b2b2b2;
+        --CardBackgroundColor: #ffffff;
+        --CardPromoBackgroundColor: #f9f1ec;
+        --CardPromoBorderColor: #efddd7;
+        --CardBorderColor: rgba(0, 0, 0, 0.175);
+        --CarouselIndicatorShapeColor: #b2b2b2;
+        --CarouselIndicatorHoverShapeColor: #cccccc;
+        --CarouselIndicatorPressedShapeColor: #000000;
+        --CarouselIndicatorSelectedBackgroundColor: rgba(0, 0, 0, 0);
+        --CarouselIconArrowColor: #6e6e6e;
+        --CloseButtonBackgroundColor: #f2f2f2;
+        --CloseButtonIconColor: #454545;
+        --CloseButtonHoverBackgroundColor: #e8e8e8;
+        --DividerMidBorderColor: #a19c9c;
+        --DropdownBackgroundColor: #ffffff;
+        --DropdownBorderColor: rgba(149, 149, 149, 1);
+        --DropdownTextColor: #454545;
+        --DropdownFocusBorderColor: #4258ff;
+        --InputSelectedBorderColor: #4258ff;
+        --LinkTextColor: #000000;
+        --LinkHoverTextColor: #ea1010;
+        --LinkSecondaryTextColor: #af0707;
+        --LinkSecondaryHoverTextColor: #ff1c1c;
+        --ModalMdBackgroundColor: #ffffff;
+        --ModalMdBorderColor: #ffffff;
+        --NavBarItemSelectedTextColor: #c01818;
+        --OverflowMenuItemDividerColor: #f2f2f2;
+        --OverflowMenuItemTextColor: #454545;
+        --OverflowMenuItemHoverBackgroundColor: #f2f2f2;
+        --OverflowMenuItemHoverTextColor: #454545;
+        --OverflowMenuItemSelectedBackgroundColor: #ff1c1c;
+        --OverflowMenuItemSelectedTextColor: #f4f5fe;
+        --OverflowMenuItemDisabledBackgroundColor: #f2f2f2;
+        --RadioBackgroundColor: #ffffff;
+        --RadioBorderColor: #b1babf;
+        --RadioHoverBackgroundColor: #efefef;
+        --RadioSelectedBackgroundColor: #ffffff;
+        --RadioSelectedBorderColor: #ff1c1c;
+        --SwitchBorderRadius: 1.5rem;
+        --TabsBorderColor: rgba(0, 0, 0, 0);
+        --TabsSelectedBackgroundColor: #ffffff;
+        --TabsSelectedBorderColor: rgba(0, 0, 0, 0);
+        --TabsSelectedHighlightColor: #ff1c1c;
+        --TabsHoverBorderColor: rgba(0, 0, 0, 0);
+        --TabsBorderWidth: 0.0625rem;
+        --TypographyHeaderXxxlColor: #000;
+        --TypographyHeaderXxlColor: #000;
+        --TypographyHeaderXlColor: #000;
+        --TypographyHeaderLgColor: #000;
+        --TypographyHeaderMdColor: #000;
+        --TypographyHeaderSmColor: #000;
+        --TypographyHeaderXsColor: #000;
+        --TypographyHeaderXxsColor: #000;
+        --TypographyHeaderXxxsColor: #000;
+        --TypographyBodyXlColor: #000;
+        --AccordionCollapseBorderWidth: 0.0625rem;
+        --BadgeBorderRadius: 0.375rem;
+        --ButtonBorderWidth: 0.0625rem;
+        --ButtonBorderRadius: 2rem;
+        --CardXlBorderRadius: 1.25rem;
+        --CardMdBorderRadius: 0.75rem;
+        --CardBorderWidth: 0.0625rem;
+        --CloseButtonBorderRadius: 3rem;
+        --DropdownBorderWidth: 0.0625rem;
+        --DropdownBorderRadius: 0.5rem;
+        --ModalLgBorderRadius: 1.5rem;
+        --ModalMdBorderWidth: 0.0625rem;
+        --ModalMdBorderRadius: 1rem;
+        --ModalSmBorderRadius: 0.75rem;
+        --PencilBannerBgColor: #ffffff;
+        --PencilBannerTextColor: #343434;
+        --PencilBannerBorder: 1px solid #b2b2b2;
+        --PencilBannerBorderRadius: 0.75rem;
+        --PencilBannerSecondaryBgColor: linear-gradient(90deg, #ff3838 37.62%, #c90063 84.8%);
+        --PencilBannerSecondaryTextColor: #ffffff;
+        --PencilBannerSecondaryLinkColor: #ffffff;
+        --PencilBannerSecondaryBorderRadius: 0.75rem;
+        --RadioBorderWidth: 0.125rem;
+        --RadioBorderRadius: 3rem;
+        --RadioWidth: 1.25em;
+        --RadioHeight: 1.25em;
+        --RadioSelectedWidth: 0.1875em;
+        --TypographyHeaderXxxlFontSize: 6rem;
+        --TypographyHeaderXxlFontSize: 3.75rem;
+        --TypographyHeaderXlFontSize: 3rem;
+        --TypographyHeaderLgFontSize: 2.5rem;
+        --TypographyHeaderMdFontSize: 2rem;
+        --TypographyHeaderSmFontSize: 1.75rem;
+        --TypographyHeaderXsFontSize: 1.5rem;
+        --TypographyHeaderXxsFontSize: 1.25rem;
+        --TypographyHeaderXxxsFontSize: 1.125rem;
+        --TypographyBodyXlFontSize: 1.25rem;
+        --TypographyBodyLgFontSize: 1.125rem;
+        --TypographyBodyMdFontSize: 1rem;
+        --TypographyBodySmFontSize: 0.875rem;
+        --AccordionCollapseBorderRadius: 0px;
+        --BadgeBorderRadius: 4.75px;
+        --ButtonBorder: none;
+        --ButtonBorderRadius: 32px;
+        --ButtonSuccessBorder: 0px solid rgba(36, 188, 152, 1);
+        --ButtonDarkBorder: 0px solid rgba(255, 28, 28, 1);
+        --ButtonLightBorder: 1px solid rgba(255, 255, 255, 1);
+        --ButtonLightPressedBorder: 1px solid rgba(255, 255, 255, 1);
+        --ButtonSecondaryBorder: 1px solid #a19c9c;
+        --CloseButtonBorder: 1px solid rgba(232, 232, 232, 1);
+        --CloseButtonBorderRadius: 48px;
+        --DividerHeavyBorder: none;
+        --DropdownBorderRadius: 8px;
+        --RadioBorder: 1px solid #ff1c1c;
+        --RadioFocusBorder: 2px solid rgba(66, 88, 255, 1);
+        --SwitchBorderRadius: 24px;
+        --TypographyHeaderXxxlStrongFontWeight: 600;
+        --TypographyHeaderXxlStrongFontWeight: 600;
+        --TypographyHeaderXlStrongFontWeight: 600;
+        --TypographyHeaderLgStrongFontWeight: 600;
+        --TypographyHeaderMdStrongFontWeight: 600;
+        --TypographyHeaderSmStrongFontWeight: 600;
+        --TypographyHeaderXsStrongFontWeight: 600;
+        --TypographyHeaderXxsFontWeight: 400;
+        --TypographyHeaderXxxsFontWeight: 400;
+      }
+      /* nav */
+      hr {
+        margin: 1rem 0;
+        color: inherit;
+        border: 0;
+        border-top: 1px solid;
+      }
+      h2 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        line-height: 1.2;
+      }
+      h2 {
+        font-size: calc(1.325rem + 0.9vw);
+      }
+      @media (min-width: 1200px) {
+        h2 {
+          font-size: 2rem;
+        }
+      }
+      p {
+        margin-top: 0;
+        margin-bottom: 1rem;
+      }
+      ul {
+        margin-top: 0;
+        margin-bottom: 1rem;
+      }
+      ul ul {
+        margin-bottom: 0;
+      }
+      a {
+        color: var(--bs-link-color);
+        text-decoration: underline;
+      }
+      a:hover {
+        color: var(--bs-link-hover-color);
+      }
+      img,
+      svg {
+        vertical-align: middle;
+      }
+      [role="button"] {
+        cursor: pointer;
+      }
+      .row {
+        --bs-gutter-x: 30px;
+        --bs-gutter-y: 0;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: calc(-1 * var(--bs-gutter-y));
+        margin-right: calc(-0.5 * var(--bs-gutter-x));
+        margin-left: calc(-0.5 * var(--bs-gutter-x));
+      }
+      .row > * {
+        flex-shrink: 0;
+        width: 100%;
+        max-width: 100%;
+        padding-right: calc(var(--bs-gutter-x) * 0.5);
+        padding-left: calc(var(--bs-gutter-x) * 0.5);
+        margin-top: var(--bs-gutter-y);
+      }
+      .col-12 {
+        flex: 0 0 auto;
+        width: 100%;
+      }
+      @media (min-width: 992px) {
+        .col-lg-3 {
+          flex: 0 0 auto;
+          width: 25%;
+        }
+      }
+      .collapse:not(.show) {
+        display: none;
+      }
+      .dropdown {
+        position: relative;
+      }
+      .dropdown-toggle {
+        white-space: nowrap;
+      }
+      .dropdown-toggle:after {
+        display: inline-block;
+        margin-left: 0.255em;
+        vertical-align: 0.255em;
+        content: "";
+        border-top: 0.3em solid;
+        border-right: 0.3em solid transparent;
+        border-bottom: 0;
+        border-left: 0.3em solid transparent;
+      }
+      .dropdown-toggle:empty:after {
+        margin-left: 0;
+      }
+      .dropdown-menu {
+        --bs-dropdown-zindex: 1000;
+        --bs-dropdown-min-width: 10rem;
+        --bs-dropdown-padding-x: 0;
+        --bs-dropdown-padding-y: 0.5rem;
+        --bs-dropdown-spacer: 0.125rem;
+        --bs-dropdown-font-size: 1rem;
+        --bs-dropdown-color: #53565a;
+        --bs-dropdown-bg: #ffffff;
+        --bs-dropdown-border-color: var(--bs-border-color-translucent);
+        --bs-dropdown-border-radius: 0.375rem;
+        --bs-dropdown-border-width: 1px;
+        --bs-dropdown-inner-border-radius: calc(0.375rem - 1px);
+        --bs-dropdown-divider-bg: var(--bs-border-color-translucent);
+        --bs-dropdown-divider-margin-y: 0.5rem;
+        --bs-dropdown-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        --bs-dropdown-link-color: #101828;
+        --bs-dropdown-link-hover-color: #0e1624;
+        --bs-dropdown-link-hover-bg: #e8e8e8;
+        --bs-dropdown-link-active-color: #ffffff;
+        --bs-dropdown-link-active-bg: #0d6efd;
+        --bs-dropdown-link-disabled-color: #adb5bd;
+        --bs-dropdown-item-padding-x: 1rem;
+        --bs-dropdown-item-padding-y: 0.25rem;
+        --bs-dropdown-header-color: #475467;
+        --bs-dropdown-header-padding-x: 1rem;
+        --bs-dropdown-header-padding-y: 0.5rem;
+        position: absolute;
+        z-index: var(--bs-dropdown-zindex);
+        display: none;
+        min-width: var(--bs-dropdown-min-width);
+        padding: var(--bs-dropdown-padding-y) var(--bs-dropdown-padding-x);
+        margin: 0;
+        font-size: var(--bs-dropdown-font-size);
+        color: var(--bs-dropdown-color);
+        text-align: left;
+        list-style: none;
+        background-color: var(--bs-dropdown-bg);
+        background-clip: padding-box;
+        border: var(--bs-dropdown-border-width) solid var(--bs-dropdown-border-color);
+        border-radius: var(--bs-dropdown-border-radius);
+      }
+      .dropdown-menu[data-bs-popper] {
+        top: 100%;
+        left: 0;
+        margin-top: var(--bs-dropdown-spacer);
+      }
+      .dropdown-menu.show {
+        display: block;
+      }
+      .nav {
+        --bs-nav-link-padding-x: 1rem;
+        --bs-nav-link-padding-y: 0.5rem;
+        --bs-nav-link-color: var(--bs-link-color);
+        --bs-nav-link-hover-color: var(--bs-link-hover-color);
+        --bs-nav-link-disabled-color: #475467;
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+      }
+      .d-block {
+        display: block !important;
+      }
+      .d-flex {
+        display: flex !important;
+      }
+      .d-none {
+        display: none !important;
+      }
+      .flex-column {
+        flex-direction: column !important;
+      }
+      .flex-row-reverse {
+        flex-direction: row-reverse !important;
+      }
+      .justify-content-start {
+        justify-content: flex-start !important;
+      }
+      .align-items-start {
+        align-items: flex-start !important;
+      }
+      .align-items-center {
+        align-items: center !important;
+      }
+      .mt-5 {
+        margin-top: 3rem !important;
+      }
+      .mb-0 {
+        margin-bottom: 0 !important;
+      }
+      .mb-2 {
+        margin-bottom: 0.5rem !important;
+      }
+      .fw-semibold {
+        font-weight: 600 !important;
+      }
+      .rounded-pill {
+        border-radius: var(--bs-border-radius-pill) !important;
+      }
+      @media (min-width: 768px) {
+        .d-md-flex {
+          display: flex !important;
+        }
+        .flex-md-row {
+          flex-direction: row !important;
+        }
+      }
+      @media (min-width: 992px) {
+        .d-lg-block {
+          display: block !important;
+        }
+        .d-lg-flex {
+          display: flex !important;
+        }
+        .d-lg-none {
+          display: none !important;
+        }
+      }
+      .d-block {
+        display: block !important;
+      }
+      .d-flex {
+        display: flex !important;
+      }
+      .d-none {
+        display: none !important;
+      }
+      .flex-column {
+        flex-direction: column !important;
+      }
+      .flex-row-reverse {
+        flex-direction: row-reverse !important;
+      }
+      .mt-5 {
+        margin-top: 3rem !important;
+      }
+      .mr-3 {
+        margin-right: 1rem !important;
+      }
+      .mb-0 {
+        margin-bottom: 0 !important;
+      }
+      .mb-2 {
+        margin-bottom: 0.5rem !important;
+      }
+      .ml-3 {
+        margin-left: 1rem !important;
+      }
+      .pl-0 {
+        padding-left: 0 !important;
+      }
+      .rounded-pill {
+        border-radius: var(--bs-border-radius-pill) !important;
+      }
+      @media (min-width: 768px) {
+        .d-md-flex {
+          display: flex !important;
+        }
+        .flex-md-row {
+          flex-direction: row !important;
+        }
+      }
+      @media (min-width: 992px) {
+        .d-lg-block {
+          display: block !important;
+        }
+        .d-lg-flex {
+          display: flex !important;
+        }
+        .d-lg-none {
+          display: none !important;
+        }
+      }
+      @media (max-width: 575.98px) {
+        h2 {
+          font-size: 1.75rem;
+        }
+      }
+      *:focus {
+        outline: none;
+      }
+      a {
+        text-decoration: none;
+      }
+      /*! CSS Used from: https://media.mcafeeassets.com/content/dam/npcld/custom-scripts/organic-site/mcafee-redesign/css/mcafee-redesign-mfe-edits.css */
+      a:hover {
+        text-decoration: none;
+      }
+      hr {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      @media (max-width: 575.98px) {
+        a {
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+        }
+      }
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        .header {
+          background-color: #000;
+        }
+      }
+      .header .dropdown-toggle::after {
+        border: 0;
+      }
+      .header .dropdown-toggle:hover::after {
+        color: #b42318 !important;
+      }
+      .header .subnavlinks .navHdr {
+        font-size: 24px;
+        line-height: 33px;
+        font-weight: 500;
+        margin: 0 0 20px;
+        color: #53565a;
+      }
+      .header .navHdr:empty {
+        margin-bottom: 1px;
+      }
+      .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+        background-image: none;
+        background-color: #262626;
+      }
+      .wrapper.bg-black .header .subnavContainer ul.subnavlinks li .navHdr,
+      .wrapper.bg-black .header .subnavContainer ul.subnavlinks li ul li a,
+      .wrapper.bg-black .header .subnavContainer ul.subnavlinks li ul li a:visited {
+        color: #fff;
+      }
+      .wrapper.bg-black .header ul.navlinks li.dropdown.open {
+        background-color: transparent;
+      }
+      .wrapper.bg-black .header .dropdown-menu {
+        background-color: #000;
+      }
+      @media screen and (max-width: 767px) {
+        .header .subnavlinks .navHdr {
+          font-size: 18px;
+        }
+      }
+      @media screen and (max-width: 1167px) {
+        .header .subnavlinks .navHdr {
+          font-size: 22px;
+          line-height: normal;
+        }
+      }
+      .header .dropdown {
+        position: relative;
+      }
+      .header .dropdown-toggle:focus {
+        outline: 0;
+      }
+      .header .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        float: left;
+        min-width: 160px;
+        padding: 8px 0;
+        margin: 1px 0 0;
+        list-style: none;
+        font-size: 14px;
+        text-align: left;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        background-clip: padding-box;
+      }
+      .header .open > a {
+        outline: 0;
+      }
+      .header {
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        right: 0;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+      .header:after,
+      .header:before {
+        content: " ";
+        display: table;
+      }
+      .header:after {
+        clear: both;
+      }
+      .hamburger-btn {
+        margin: 0;
+        width: 80px;
+        height: 80px;
+        position: relative;
+        float: right;
+        -webkit-transition: all 0.3s linear;
+        transition: all 0.3s linear;
+        display: none;
+      }
+      @media screen and (max-width: 1167px) {
+        .hamburger-btn {
+          width: 60px;
+          height: 44px;
+          display: block;
+          margin-top: -3px;
+        }
+      }
+      .hamburger-btn span {
+        width: 26px;
+        height: 1px;
+        cursor: pointer;
+        background: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transition: all 0.5s linear;
+        transition: all 0.5s linear;
+        margin: -2px 0 0 -13px;
+        z-index: 3;
+      }
+      .header .navbarContainer {
+        display: table;
+        width: 100%;
+      }
+      .header .navbarContainer:after,
+      .header .navbarContainer:before {
+        display: table-cell;
+        content: "";
+        background: rgba(0, 0, 0);
+        transition: background-color 0.8s ease;
+      }
+      .header {
+        display: table-cell;
+      }
+      .header .header-wrap {
+        background: #000;
+      }
+      .header .navbarContent {
+        width: 1500px;
+      }
+      .header .header-wrap {
+        padding: 10px 5% 2px;
+        display: flex;
+        flex-flow: row wrap;
+      }
+      @media all and (-ms-high-contrast: none) {
+        .header .header-wrap {
+          padding: 10px 12% 2px 2%;
+        }
+      }
+      .header .logo-wrap {
+        width: 108px;
+        flex: 0 0 108px;
+      }
+      .header .nav-wrap {
+        flex: 1;
+      }
+      .header .icons-wrap {
+        flex: 0 0 80px;
+      }
+      .header ul.navlinks {
+        clear: both;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        font-size: 16px;
+        margin: 0 65px;
+        padding: 0;
+        list-style-type: none;
+      }
+      @media screen and (min-width: 1167px) {
+        .wrapper .header ul.navlinks li.dropdown.open {
+          background: url(https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en-us/icons/carat.png) no-repeat center bottom;
+        }
+      }
+      .header ul.navlinks li a,
+      .header ul.navlinks li a:visited {
+        color: #fff;
+        display: block;
+        text-decoration: none;
+        margin: 19px 25px 24px;
+      }
+      .header ul.navlinks li a:hover {
+        color: #ccc;
+      }
+      @media screen and (max-width: 1460px) {
+        .header ul.navlinks li a,
+        .header ul.navlinks li a:visited {
+          margin: 19px 15px 24px;
+        }
+      }
+      @media screen and (max-width: 1100px) {
+        .header ul.navlinks li a,
+        .header ul.navlinks li a:visited {
+          margin: 19px 7px 24px;
+        }
+      }
+      @media screen and (max-width: 1167px) {
+        .header ul.navlinks li a,
+        .header ul.navlinks li a:visited {
+          margin: 12px 18px 24px 0;
+        }
+      }
+      .header .logo-wrap .logo {
+        display: block;
+        height: 22px;
+        width: 108px;
+        margin: 16px 0;
+        text-indent: -999px;
+      }
+      .header .logo-wrap .logo:hover {
+        opacity: 0.6;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+      }
+      .header ul.navicons {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        justify-content: space-between;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+      .header ul.navicons li:first-child {
+        margin-right: 1.25rem;
+      }
+      .header ul.navicons > li > a {
+        color: #fff;
+        margin: 16px 0 12px;
+        text-decoration: none;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+      }
+      @media screen and (max-width: 768px) {
+        .header ul.navicons > li > a {
+          margin: 16px 0 22px;
+        }
+      }
+      @media screen and (max-height: 700px) {
+        .header ul.navicons > li > a {
+          margin: 16px 0 18px;
+        }
+      }
+      @media screen and (max-width: 1167px) {
+        .header ul.navicons li a:before {
+          font-size: 21px;
+        }
+      }
+      .header .tnav-item.dropdown {
+        position: static;
+      }
+      .header .tnav-item.dropdown {
+        margin-top: -4px;
+      }
+      .header .open .dropdown-menu {
+        margin-top: 1px;
+      }
+      @media all and (-ms-high-contrast: none) {
+        .header .open .dropdown-menu {
+          margin-top: -4px;
+        }
+      }
+      .header .subnavContainer {
+        display: none;
+        border: 0;
+        padding: 40px 25px;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 87px;
+        z-index: 15;
+        -webkit-transition: all linear 0.3s;
+        transition: all linear 0.3s;
+      }
+      .header .subnavContainer.dropdown-menu {
+        background-image: linear-gradient(to top, rgba(255, 255, 255, 0.98), #fff);
+        background-color: inherit;
+      }
+      .header .open .dropdown-menu {
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        -ms-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        transition: all 0.3s;
+        max-height: 0;
+        border-radius: 0;
+        padding: 0;
+        display: block;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        opacity: 0;
+      }
+      .header .open .dropdown-menu {
+        padding: 8px 0;
+      }
+      @media screen and (min-width: 1167px) {
+        .header ul.navlinks .dropdown .dropdown-menu {
+          height: 0;
+          padding: 0;
+        }
+        .header ul.navlinks .open .dropdown-menu {
+          height: auto;
+          padding: 60px 25px;
+          transform: translate3d(0, 3px, 0) !important;
+          top: 102px !important;
+          margin-top: -26px !important;
+        }
+        .header .open .dropdown-menu {
+          max-height: 1000px;
+          opacity: 1;
+          margin-top: 17px;
+        }
+        .wrapper.bg-black .header .open .dropdown-menu {
+          margin-top: 5px;
+          overflow: hidden;
+        }
+      }
+      .header .subnavContent {
+        margin: auto;
+        width: 1200px;
+        clear: both;
+      }
+      .header ul.subnavlinks {
+        font-size: 0.85em;
+        font-weight: 300;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        overflow: auto;
+      }
+      .header ul.subnavlinks li {
+        float: left;
+        width: 30.3%;
+      }
+      @media (min-width: 1168px) {
+        .header ul.subnavlinks li {
+          float: left;
+          width: 29.3%;
+        }
+      }
+      @media (min-width: 1100px) {
+        .header ul.subnavlinks li {
+          float: left;
+          width: 25.3%;
+        }
+      }
+      @media (min-width: 1200px) {
+        .header ul.subnavlinks li {
+          float: left;
+          width: 28.3%;
+        }
+      }
+      @media (min-width: 1300px) {
+        .header ul.subnavlinks li {
+          float: left;
+          width: 33.3%;
+        }
+      }
+      .header ul.subnavlinks li .navHdr {
+        color: #333;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: normal;
+        padding: 0 0 5px 0;
+        display: inline-block;
+        width: 85%;
+        border-bottom: 1px solid #ff1c1c;
+      }
+      .header ul.subnavlinks li ul {
+        margin: 0 0 40px;
+        padding: 0;
+        list-style-type: none;
+      }
+      .header ul.subnavlinks li ul li {
+        float: none;
+        width: 100%;
+      }
+      .header ul.subnavlinks li ul li a,
+      .header ul.subnavlinks li ul li a:visited {
+        color: #333;
+        font-size: 14px;
+        line-height: 26px;
+        margin: 0;
+        text-decoration: none;
+      }
+      .header .subnavlinks a:hover {
+        color: #ea1010 !important;
+        border-color: #ea1010 !important;
+      }
+      .header ul.navicons > li > a {
+        font-size: 14px;
+      }
+      @media screen and (max-width: 1167px) {
+        .header .dropdown .dropdown-menu,
+        .header .navbarContainer:after,
+        .header .navbarContainer:before,
+        .header ul.navicons li.dropdown,
+        .header ul.navlinks {
+          display: none;
+        }
+        .header .subnavContent {
+          width: auto;
+        }
+        .header .logo-wrap {
+          position: absolute;
+          left: 20px;
+          top: 3px;
+        }
+        .header .header-wrap {
+          padding: 1px 14px;
+        }
+        .header ul.navicons {
+          position: absolute;
+          right: 60px;
+          width: auto;
+        }
+        .header .dropdown-toggle:after,
+        .header .dropdown-toggle:before {
+          content: " ";
+          display: table;
+        }
+        .hamburger-btn span:first-child {
+          margin: -10px 0 0 -13px;
+        }
+        .hamburger-btn span:last-child {
+          margin: 6px 0 0 -13px;
+        }
+        .header ul.navicons li a.entlink {
+          background: 0;
+          color: #ccc;
+          font-size: 1.2em;
+          width: 100%;
+          opacity: 1;
+          text-decoration: none;
+        }
+        ul.navicons li:hover a.entlink {
+          color: #fff;
+        }
+        .header .subnavContainer.dropdown-menu {
+          padding: 24px 25px 24px 0;
+          position: fixed;
+          background: #333;
+          border: 0;
+          min-height: calc(95vh - 40px);
+          z-index: 25;
+        }
+        .header ul.subnavlinks li .navHdr {
+          color: #fff;
+          font-size: 1.36em;
+          border: 0;
+          margin: 0;
+        }
+        .header ul.subnavlinks li ul {
+          border-bottom: 1px solid #666;
+          padding-bottom: 20px;
+          margin: 0 50px 30px 0;
+        }
+        .header ul.subnavlinks li:last-child ul:last-child {
+          border-bottom: 0;
+        }
+        .header ul.subnavlinks li ul li a,
+        .header ul.subnavlinks li ul li a:visited {
+          color: #ccc;
+          font-size: 1.23em;
+          padding: 5px 0;
+        }
+        .header ul.subnavlinks li ul li a:hover {
+          color: #fff;
+        }
+      }
+      @media screen and (max-width: 767px) {
+        .header ul.navlinks .open .dropdown-menu {
+          margin-top: 0 !important;
+        }
+        .header .header-wrap {
+          padding: 10px 2% 2px;
+        }
+      }
+      @media screen and (max-width: 1310px) {
+        .header ul.navlinks {
+          margin: 0 23px;
+        }
+      }
+      @media screen and (max-width: 1331.98px) {
+        .header .header-wrap {
+          padding: 10px 2% 5px;
+        }
+      }
+      .header .header-wrap {
+        align-items: baseline;
+      }
+      .navicons {
+        align-items: center;
+      }
+      a.nav.dropdown-toggle:after {
+        content: "";
+        background-image: url(https://media.mcafeeassets.com/content/dam/npcld/icons/nav-arrow.svg);
+        height: 5px;
+        width: 7px;
+        background-repeat: no-repeat;
+        display: inline-block;
+      }
+      .open a.nav.dropdown-toggle:after {
+        transform: rotate(180deg);
+        content: "";
+        background-image: url(https://media.mcafeeassets.com/content/dam/npcld/icons/nav-arrow-red.svg);
+        height: 7px;
+        width: 10px;
+        background-repeat: no-repeat;
+        display: inline-block;
+      }
+      .header ul.navicons li#tnav9 {
+        padding-bottom: 0;
+        background: 0 0;
+      }
+      @media screen and (max-width: 1167px) {
+        .header ul.subnavlinks {
+          margin-top: 15px;
+        }
+        .dropdown-toggle:after {
+          content: "";
+          background-image: url(https://media.mcafeeassets.com/content/dam/npcld/icons/nav-arrow.svg);
+          height: 5px;
+          width: 7px;
+          background-repeat: no-repeat;
+          transform: rotate(-90deg);
+        }
+        .header ul.navicons li a.entlink {
+          background: 0;
+          color: #fff;
+        }
+        .open .dropdown-toggle:after {
+          display: none !important;
+        }
+        .open .dropdown-menu {
+          padding-top: 0 !important;
+        }
+      }
+      @media screen and (min-width: 1168px) {
+        .dropdown-menu.show li:last-child {
+          border-bottom: 0;
+        }
+      }
+      @media screen and (min-width: 1033px) and (max-width: 1075px) {
+        .header ul.navlinks {
+          margin: 0 20px !important;
+        }
+      }
+      @media screen and (min-width: 1332px) and (max-width: 1372px) {
+        .header ul.navlinks {
+          margin: 0 45px !important;
+        }
+      }
+      @media screen and (min-width: 1206px) {
+        .header ul.navicons li:first-child {
+          margin-right: 3.25rem;
+        }
+      }
+      @media (max-width: 1370px) {
+        html .header ul.navlinks li a,
+        html .header ul.navlinks li a:visited {
+          margin: 19px 21px 24px;
+        }
+      }
+      @media (max-width: 1090px) {
+        html .header ul.navlinks li a,
+        html .header ul.navlinks li a:visited {
+          margin: 19px 10px 24px;
+        }
+      }
+      @media (max-width: 1370px) {
+        html .header ul.navlinks li a,
+        html .header ul.navlinks li a:visited {
+          margin: 19px 21px 24px;
+        }
+      }
+      @media (max-width: 1190px) {
+        html .header ul.navlinks li a,
+        html .header ul.navlinks li a:visited {
+          margin: 19px 10px 24px;
+        }
+      }
+      @media screen and (max-width: 1167px) {
+        .header ul.subnavlinks {
+          padding-bottom: 100px;
+        }
+      }
+      .header .logo-wrap {
+        width: 147px;
+        flex: 0 0 147px;
+      }
+      .header .header-wrap {
+        background: #ffff;
+      }
+      .header ul.navlinks li a,
+      .header ul.navlinks li a:visited {
+        margin: 19px 15px 24px;
+        font-family: "Poppins";
+        font-weight: 600;
+        font-size: 1rem;
+        color: #706e6e;
+      }
+      .header .logo-wrap .logo {
+        height: 30px;
+        width: 147px;
+      }
+      a.nav.dropdown-toggle::after {
+        background-image: url(https://media.mcafeeassets.com/content/dam/npcld/en-us/test-assets/header-redesign/gray-arrowdwn.svg);
+        width: 10px;
+        height: 6px;
+      }
+      a.nav.dropdown-toggle:hover::after {
+        background-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%227%22%20viewBox%3D%220%200%2010%207%22%20fill%3D%22none%22%3E%0A%3Cpath%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20d%3D%22M1%200.899902L5%205.0999L9%200.899902%22%20stroke%3D%22%23AF0707%22%20stroke-width%3D%222%22%2F%3E%0A%3C%2Fsvg%3E);
+        width: 10px;
+        height: 6px;
+      }
+      .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+        background-color: #f2f2f2;
+      }
+      .header ul.subnavlinks li .navHdr {
+        border-bottom: 1px solid #d1cccc;
+      }
+      .wrapper.bg-black .header .subnavContainer ul.subnavlinks li .navHdr,
+      .wrapper.bg-black .header .subnavContainer ul.subnavlinks li ul li a,
+      .wrapper.bg-black .header .subnavContainer ul.subnavlinks li ul li a:visited {
+        color: #101828;
+      }
+      .header ul.navicons > li > a {
+        color: #706e6e;
+        font-family: "Poppins";
+        font-weight: 600;
+      }
+      @media screen and (min-width: 1167px) {
+        .wrapper .header ul.navlinks li.dropdown.open {
+          background: url(https://media.mcafeeassets.com/content/dam/npcld/en-us/test-assets/header-redesign/orange-marker.svg) no-repeat center bottom;
+        }
+      }
+      .tnav-item a:hover {
+        color: #ff1c1c !important;
+      }
+      .hamburger-btn span {
+        background: #101828 !important;
+      }
+      .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+        border-radius: 20px;
+        width: calc(100% - 60px);
+        margin: 0 30px;
+      }
+      .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+        border-radius: 20px;
+      }
+      .header .navbarContainer:before,
+      .header .navbarContainer:after {
+        background: #fff;
+      }
+      .header .navbarContent {
+        width: 100% !important;
+      }
+      .icons-wrap {
+        margin-right: initial;
+        order: 4;
+        padding-top: 2px;
+      }
+      .nav-wrap {
+        padding: 10px 0px 0px 10px;
+        order: 2;
+        margin-right: initial;
+      }
+      .header .header-wrap {
+        justify-content: center;
+        background-color: #f2f2f2;
+        border-radius: 20px;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      .header .nav-wrap {
+        flex: initial;
+      }
+      .header .logo-wrap {
+        order: 1;
+        margin-left: initial;
+      }
+      .header ul.navlinks {
+        margin: initial !important;
+      }
+      .header ul.navlinks li a,
+      .header ul.navlinks li a:visited {
+        margin: 19px 10px 24px;
+        font-size: 0.92rem;
+      }
+      .header ul.navicons li:first-child {
+        margin-right: initial;
+      }
+      @media screen and (min-width: 1167px) {
+        .header ul.navlinks .open .dropdown-menu {
+          margin-top: -19px !important;
+        }
+      }
+      @media (min-width: 0px) and (max-width: 1167px) {
+        .header .icons-wrap {
+          flex: 0 0 100%;
+        }
+        .hamburger-btn span {
+          background: #333;
+        }
+        #tnav10 {
+          display: none;
+        }
+        .hamburger-btn {
+          margin-top: initial !important;
+        }
+        .header .subnavContainer.dropdown-menu {
+          background: #f2f2f2;
+        }
+        .header ul.navlinks li a,
+        .header ul.navlinks li a:visited {
+          font-size: 17px;
+        }
+        .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+          margin: initial;
+          border-radius: initial;
+        }
+        .header {
+          padding: initial;
+        }
+        .header .header-wrap {
+          border-radius: initial;
+          background-color: #fff;
+        }
+        .header .nav-wrap {
+          flex: initial;
+          background: #f2f2f2 !important;
+        }
+        html .header ul.navlinks li a:visited {
+          border-bottom: 1px solid #d1cccc !important;
+          padding: 7px;
+        }
+        .header ul.subnavlinks li .navHdr {
+          border-bottom: initial;
+        }
+        .nav-wrap {
+          padding: initial;
+        }
+        .nav-wrap ul li a {
+          border-bottom: solid 1px#DEDBDB;
+          padding-bottom: 10px;
+        }
+        html .header ul.navlinks li a,
+        html .header ul.navlinks li a:visited {
+          margin: 19px 0px 24px;
+          padding-left: 10px;
+        }
+        .wrapper.bg-black .header .subnavContainer ul.subnavlinks li .navHdr,
+        .wrapper.bg-black .header .subnavContainer ul.subnavlinks li ul li a,
+        .wrapper.bg-black .header .subnavContainer ul.subnavlinks li ul li a:visited {
+          border-bottom: initial !important;
+        }
+        .header ul.subnavlinks li ul {
+          padding-bottom: 5px;
+        }
+        .header {
+          padding: initial !important;
+        }
+        .subnavContainer {
+          width: 100% !important;
+        }
+      }
+      @media screen and (min-width: 1206px) {
+        .header ul.navicons li:first-child {
+          margin-right: initial;
+        }
+      }
+      @media (min-width: 320px) and (max-width: 375px) {
+        .header ul.navlinks li a,
+        .header ul.navlinks li a:visited {
+          font-size: 0.999rem;
+        }
+      }
+      .header {
+        background-color: #fff;
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      .header .logo-wrap {
+        width: initial;
+        flex: initial;
+      }
+      .header .logo-wrap .logo {
+        display: initial !important;
+        height: initial !important;
+        width: initial !important;
+        margin: initial !important;
+        text-indent: initial !important;
+      }
+      .globe {
+        padding-left: 10px;
+      }
+      .hamburger-btn span {
+        background: #101828 !important;
+      }
+      .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+        border-radius: 20px;
+        width: calc(100% - 60px);
+        margin: 0 30px;
+      }
+      .header ul.navicons > li > a {
+        color: #101828;
+      }
+      .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+        border-radius: 20px;
+      }
+      .header .navbarContainer:before,
+      .header .navbarContainer:after {
+        background: #fff;
+      }
+      .header .navbarContent {
+        width: 100% !important;
+      }
+      .icons-wrap {
+        margin-right: initial;
+        order: 4;
+      }
+      .header {
+        background-color: #fff;
+        padding: 10px 30px 10px 30px;
+      }
+      .nav-wrap {
+        padding: 0px 0px 0px 10px;
+        order: 2;
+        margin-right: auto;
+      }
+      .header .header-wrap {
+        justify-content: center;
+        background-color: #f2f2f2;
+        border-radius: 20px;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      .header .nav-wrap {
+        flex: initial;
+      }
+      .header .logo-wrap {
+        order: 1;
+        margin-left: initial;
+      }
+      .header ul.navlinks {
+        margin: initial !important;
+      }
+      .header ul.navlinks li a,
+      .header ul.navlinks li a:visited {
+        margin: 19px 10px 22px;
+        font-size: 0.92rem;
+      }
+      .header ul.navicons li:first-child {
+        margin-right: initial;
+      }
+      .header ul.navlinks .open .dropdown-menu {
+        margin-top: -6px !important;
+      }
+      .header .icons-wrap {
+        padding-top: 3px;
+      }
+      @media (min-width: 1167px) and (max-width: 1370px) {
+        html .header ul.navlinks li a,
+        html .header ul.navlinks li a:visited {
+          margin: 19px 7px 22px;
+        }
+      }
+      @media (min-width: 0px) and (max-width: 1167px) {
+        .header .logo-wrap {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          padding: 1.5rem !important;
+        }
+        .header ul.subnavlinks li:last-child ul:last-child {
+          border-bottom: 0;
+          padding-top: 25px;
+        }
+        html .header ul.navlinks li a,
+        html .header ul.navlinks li a:visited {
+          margin: 19px 7px 22px;
+        }
+        .globe {
+          display: none;
+        }
+        .header .icons-wrap {
+          flex: 0 0 100%;
+        }
+        .hamburger-btn span {
+          background: #333;
+        }
+        .hamburger-btn {
+          margin-top: initial !important;
+        }
+        .header .subnavContainer.dropdown-menu {
+          background: #f2f2f2;
+        }
+        .header ul.navlinks li a,
+        .header ul.navlinks li a:visited {
+          font-size: 17px;
+        }
+        .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+          margin: initial;
+          border-radius: initial;
+        }
+        .header {
+          padding: initial;
+        }
+        .header .header-wrap {
+          border-radius: initial;
+          background-color: #fff;
+        }
+        .header .nav-wrap {
+          flex: initial;
+          background: #f2f2f2 !important;
+        }
+        html .header ul.navlinks li a:visited {
+          border-bottom: 1px solid #d1cccc !important;
+          padding: 7px;
+        }
+        .header ul.subnavlinks li .navHdr {
+          border-bottom: initial;
+        }
+        .nav-wrap {
+          padding: initial;
+        }
+        .nav-wrap ul li a {
+          border-bottom: solid 1px#DEDBDB;
+          padding-bottom: 10px;
+        }
+        html .header ul.navlinks li a,
+        html .header ul.navlinks li a:visited {
+          margin: 19px 0px 22px;
+          padding-left: 10px;
+        }
+        .wrapper.bg-black .header .subnavContainer ul.subnavlinks li .navHdr,
+        .wrapper.bg-black .header .subnavContainer ul.subnavlinks li ul li a,
+        .wrapper.bg-black .header .subnavContainer ul.subnavlinks li ul li a:visited {
+          border-bottom: initial !important;
+        }
+        .header ul.subnavlinks li ul {
+          padding-bottom: 5px;
+        }
+        .header {
+          padding: initial !important;
+        }
+        .subnavContainer {
+          width: 100% !important;
+        }
+      }
+      @media screen and (min-width: 1206px) {
+        .header ul.navicons li:first-child {
+          margin-right: initial;
+        }
+      }
+      @media (min-width: 1200px) and (max-width: 1400px) {
+        .header ul.navlinks li a {
+          font-size: 0.8rem !important;
+        }
+      }
+      @media screen and (min-width: 1600px) {
+        .header ul.navlinks li a {
+          font-size: 18px !important;
+        }
+      }
+      @media (min-width: 320px) and (max-width: 375px) {
+        .header ul.navlinks li a,
+        .header ul.navlinks li a:visited {
+          font-size: 0.999rem;
+        }
+        .header .header-wrap {
+          padding-left: initial;
+          padding-right: initial;
+        }
+      }
+      @media (min-width: 375px) and (max-width: 480px) {
+        .header .header-wrap {
+          padding-left: initial;
+          padding-right: initial;
+        }
+      }
+      @media (min-width: 993px) {
+        h2 {
+          font-size: 40px;
+          font-weight: 600;
+          line-height: 48px;
+        }
+      }
+      @media (min-width: 577px) and (max-width: 992px) {
+        h2 {
+          font-size: 32px;
+          font-weight: 600;
+          line-height: 40px;
+        }
+      }
+      @media (max-width: 576px) {
+        h2 {
+          font-size: 32px !important;
+          line-height: 40px !important;
+          font-weight: 600 !important;
+        }
+      }
+      .navlinks #tnav10 .global-svg:hover {
+        fill: #b42318;
+      }
+      /*! CSS Used from: Embedded */
+      @media (min-width: 1167px) {
+        .header.new-header.is-fixed.makeHeaderTransparent {
+          background: rgba(255, 255, 255, 0.5) !important;
+        }
+      }
+      /*! CSS Used from: https://media.mcafeeassets.com/content/dam/npcld/custom-scripts/organic-site/mcafee-redesign/css/global-nav-fdr-fc.css */
+      .header.new-header {
+        background-color: #fff;
+        padding: 10px 0 10px 0;
+      }
+      .header .header-wrap {
+        justify-content: center;
+        background-color: #fff;
+        border-radius: 20px;
+        margin-top: 10px;
+        padding: 0 28px 0;
+      }
+      .header .logo-wrap {
+        order: 1;
+        margin-left: initial;
+        margin-top: 10px !important;
+        margin-bottom: 18px !important;
+      }
+      @media (max-width: 1167px) {
+        .header .logo-wrap {
+          padding-left: 14px !important;
+          margin-top: 0 !important;
+          border-bottom: 1px solid #eaecf0;
+        }
+      }
+      .header ul.subnavlinks {
+        overflow: visible;
+      }
+      .icons-wrap {
+        margin-top: -14px;
+      }
+      .header .icons-wrap {
+        flex: none;
+      }
+      ul.navicons.more.d-none.d-lg-block {
+        margin-top: 12px;
+      }
+      ul.navicons.navbutton {
+        margin-left: 20px;
+      }
+      a.nav.dropdown-toggle.support-nav.d-flex.align-items-center {
+        padding-top: 15px;
+        padding-left: 0 !important;
+        margin-left: 20px;
+      }
+      .header .nav-wrap {
+        background-color: #fff !important;
+        margin-top: 0;
+      }
+      .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+        background-color: #fff;
+        padding: 25px 28px 8px;
+      }
+      .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+        border-radius: 0 0 20px 20px;
+      }
+      .header ul.subnavlinks li {
+        float: left;
+        width: 24.3%;
+      }
+      .header .subnavContent {
+        margin: 0;
+      }
+      .header ul.subnavlinks li ul {
+        margin: 0;
+      }
+      .header ul.subnavlinks li ul li {
+        padding-bottom: 16px;
+      }
+      @media only screen and (min-width: 1168px) {
+        .globe {
+          margin-top: 4px;
+        }
+        .header ul.subnavlinks li .navHdr {
+          width: 80%;
+          font-size: 12px;
+          padding-bottom: 12px;
+          white-space: nowrap;
+        }
+        .wrapper.bg-black .header #tnav1 .subnavContainer.dropdown-menu {
+          width: 1043px;
+          margin-left: 29px;
+        }
+        .header #tnav1 .subnavContent {
+          width: calc(540px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav2 .subnavContainer.dropdown-menu {
+          width: 966px;
+          margin-left: 29px;
+        }
+        .header #tnav2 .subnavContent {
+          width: calc(498px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav3 .subnavContainer.dropdown-menu {
+          width: 482px;
+          margin-left: 553px;
+        }
+        .header #tnav3 .subnavContent {
+          width: calc(484px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav4 .subnavContainer.dropdown-menu {
+          width: 635px;
+          margin-left: 391px;
+        }
+        .header #tnav4 .subnavContent {
+          width: calc(429px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav5 .subnavContainer.dropdown-menu {
+          width: 680px;
+          margin-left: 419px;
+        }
+        .header #tnav5 .subnavContent {
+          width: calc(461px * 3) !important;
+        }
+        .header ul.navlinks li a {
+          font-size: 12px;
+        }
+        .header ul.subnavlinks li {
+          float: left;
+          width: 16%;
+        }
+        p.total-protection-desc {
+          padding-top: 5px;
+          padding-left: 32px;
+          width: 229px;
+          font-size: 12px;
+          line-height: 20px;
+        }
+      }
+      @media only screen and (min-width: 1200px) {
+        .globe {
+          margin-top: 4px;
+        }
+        .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+          padding: 26px 29px 29px;
+        }
+        .header ul.subnavlinks li .navHdr {
+          width: 80%;
+          font-size: 12px;
+          padding-bottom: 12px;
+          white-space: nowrap;
+        }
+        .header ul.subnavlinks li ul li {
+          padding-bottom: 16px;
+        }
+        .wrapper.bg-black .header #tnav1 .subnavContainer.dropdown-menu {
+          width: 1157px;
+          margin-left: 30px;
+        }
+        .header #tnav1 .subnavContent {
+          width: calc(593px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav2 .subnavContainer.dropdown-menu {
+          width: 1044px;
+          margin-left: 140px;
+        }
+        .header #tnav2 .subnavContent {
+          width: calc(542px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav3 .subnavContainer.dropdown-menu {
+          width: 528px;
+          margin-left: 612px;
+        }
+        .header #tnav3 .subnavContent {
+          width: calc(552px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav4 .subnavContainer.dropdown-menu {
+          width: 629px;
+          margin-left: 397px;
+        }
+        .header #tnav4 .subnavContent {
+          width: calc(431px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav5 .subnavContainer.dropdown-menu {
+          width: 690px;
+          margin-left: 497px;
+        }
+        .header #tnav5 .subnavContent {
+          width: calc(472px * 3) !important;
+        }
+        .header ul.navlinks li a {
+          font-size: 12px;
+        }
+        .header ul.subnavlinks li {
+          float: left;
+          width: 16%;
+        }
+        p.total-protection-desc {
+          padding-top: 5px;
+          padding-left: 32px;
+          width: 229px;
+          font-size: 12px;
+          line-height: 20px;
+        }
+      }
+      @media only screen and (min-width: 1366px) {
+        .globe {
+          margin-top: 4px;
+        }
+        .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+          padding: 32px 48px 29px;
+        }
+        .header ul.subnavlinks li .navHdr {
+          width: 80%;
+          font-size: 12px;
+          padding-bottom: 12px;
+          white-space: nowrap;
+        }
+        .header ul.subnavlinks li ul li {
+          padding-bottom: 16px;
+        }
+        .wrapper.bg-black .header #tnav1 .subnavContainer.dropdown-menu {
+          width: 1154px;
+          margin-left: 195px;
+        }
+        .header #tnav1 .subnavContent {
+          width: calc(591px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav2 .subnavContainer.dropdown-menu {
+          width: 1052px;
+          margin-left: 295px;
+        }
+        .header #tnav2 .subnavContent {
+          width: calc(531px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav3 .subnavContainer.dropdown-menu {
+          width: 528px;
+          margin-left: 785px;
+        }
+        .header #tnav3 .subnavContent {
+          width: calc(504px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav4 .subnavContainer.dropdown-menu {
+          width: 768px;
+          margin-left: 399px;
+        }
+        .header #tnav4 .subnavContent {
+          width: calc(504px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav5 .subnavContainer.dropdown-menu {
+          width: 729px;
+          margin-left: 499px;
+        }
+        .header #tnav5 .subnavContent {
+          width: calc(472px * 3) !important;
+        }
+        .header ul.navlinks li a {
+          font-size: 16px;
+        }
+        p.total-protection-desc {
+          padding-top: 5px;
+          padding-left: 32px;
+          width: 255px;
+          font-size: 14px;
+          line-height: 20px;
+        }
+      }
+      @media only screen and (min-width: 1600px) {
+        .globe {
+          margin-top: 4px;
+        }
+        .header ul.navlinks .open .dropdown-menu {
+          margin-top: -2px !important;
+        }
+        .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+          padding: 40px 47px 37px;
+        }
+        .header ul.subnavlinks li .navHdr {
+          width: 80%;
+          font-size: 16px;
+          padding-bottom: 12px;
+          white-space: nowrap;
+        }
+        .header ul.subnavlinks li ul li {
+          padding-bottom: 32px;
+        }
+        a.nav.dropdown-toggle.support-nav.d-flex.align-items-center {
+          padding-top: 15px;
+          padding-left: 0 !important;
+          margin-left: 10px;
+        }
+        .wrapper.bg-black .header #tnav1 .subnavContainer.dropdown-menu {
+          width: 1359px;
+          margin-left: 200px;
+        }
+        .header #tnav1 .subnavContent {
+          width: calc(704px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav2 .subnavContainer.dropdown-menu {
+          width: 1238px;
+          margin-left: 316px;
+        }
+        .header #tnav2 .subnavContent {
+          width: calc(635px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav3 .subnavContainer.dropdown-menu {
+          width: 656px;
+          margin-left: 885px;
+        }
+        .header #tnav3 .subnavContent {
+          width: calc(650px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav4 .subnavContainer.dropdown-menu {
+          width: 952px;
+          margin-left: 435px;
+        }
+        .header #tnav4 .subnavContent {
+          width: calc(643px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav5 .subnavContainer.dropdown-menu {
+          width: 907px;
+          margin-left: 553px;
+        }
+        .header #tnav5 .subnavContent {
+          width: calc(608px * 3) !important;
+        }
+        .header ul.navlinks li a {
+          font-size: 16px;
+        }
+        p.total-protection-desc {
+          padding-top: 5px;
+          padding-left: 32px;
+          width: 255px;
+          font-size: 14px;
+          line-height: 20px;
+        }
+      }
+      @media only screen and (min-width: 1900px) {
+        .globe {
+          margin-top: 4px;
+        }
+        .header ul.navlinks .open .dropdown-menu {
+          margin-top: -2px !important;
+        }
+        .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+          padding: 40px 64px 37px;
+        }
+        .header ul.subnavlinks li .navHdr {
+          width: 80%;
+          font-size: 16px;
+          padding-bottom: 12px;
+          white-space: nowrap;
+        }
+        .header ul.subnavlinks li ul li {
+          padding-bottom: 32px;
+        }
+        .wrapper.bg-black .header #tnav1 .subnavContainer.dropdown-menu {
+          width: 1508px;
+          margin-left: 200px;
+        }
+        .header #tnav1 .subnavContent {
+          width: calc(767px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav2 .subnavContainer.dropdown-menu {
+          width: 1309px;
+          margin-left: 316px;
+        }
+        .header #tnav2 .subnavContent {
+          width: calc(650px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav3 .subnavContainer.dropdown-menu {
+          width: 656px;
+          margin-left: 1184px;
+        }
+        .header #tnav3 .subnavContent {
+          width: calc(609px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav4 .subnavContainer.dropdown-menu {
+          width: 952px;
+          margin-left: 438px;
+        }
+        .header #tnav4 .subnavContent {
+          width: calc(613px * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav5 .subnavContainer.dropdown-menu {
+          width: 952px;
+          margin-left: 554px;
+        }
+        .header #tnav5 .subnavContent {
+          width: calc(618px * 3) !important;
+        }
+        .header ul.navlinks li a {
+          font-size: 16px;
+        }
+        p.total-protection-desc {
+          padding-top: 5px;
+          padding-left: 32px;
+          width: 255px;
+          font-size: 14px;
+          line-height: 20px;
+        }
+      }
+      .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+        box-sizing: border-box;
+        border: 0;
+        border-top-left-radius: 0px !important;
+        border-top-right-radius: 0px !important;
+        overflow: hidden;
+      }
+      .header ul.navlinks li a.nav.dropdown-toggle {
+        padding-left: 11px !important;
+      }
+      .header ul.navlinks .open .dropdown-menu {
+        margin-top: -16px !important;
+      }
+      .mobile-navlinks-dropdown {
+        margin-top: 0.5rem !important;
+        border-radius: 0px !important;
+        background-color: #f2f4f7 !important;
+      }
+      .collapse-child {
+        padding: 16px 16px 24px 16px !important;
+      }
+      .nav-wrap-mobile a {
+        font-size: 1rem;
+        color: #101828 !important;
+        padding: 0 16px 12px 16px;
+        display: block;
+      }
+      .mobile-nav-item,
+      .mobile-nav-item:hover {
+        color: #383434;
+      }
+      .nav-wrap-mobile,
+      .mobile-navicons {
+        display: none;
+      }
+      @media (max-width: 1167px) {
+        p.total-protection-desc {
+          padding-top: 0px;
+          padding-left: 32px;
+          width: 100%;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 24px;
+          margin-top: -10px;
+          margin-bottom: 20px;
+        }
+        .header {
+          background-color: #fff;
+          padding: 10px 10px 0;
+          padding-left: 0px !important;
+          padding-right: 0px !important;
+        }
+        .header .nav-wrap {
+          background-color: #fff !important;
+          margin-top: 7px;
+        }
+        .header .logo-wrap {
+          background-color: #fff;
+          box-shadow: none;
+          z-index: 2;
+          margin-top: 0px;
+          width: 100%;
+          padding: 24px 0 20px;
+          top: 0;
+        }
+        .header ul.navicons {
+          position: relative;
+          width: auto;
+        }
+        .nav-cta-mobile {
+          display: block;
+          right: 0 !important;
+          position: relative;
+          top: 27px !important;
+          color: #fff;
+          text-align: center;
+          padding: 8px 17px !important;
+          background-color: #383434;
+          font-size: 1.6rem !important;
+        }
+        .icons-wrap a.hamburger-btn.hamburger-newnav-btn {
+          margin-top: 16px !important;
+          margin-left: 0;
+          z-index: 999;
+        }
+        .header .header-wrap {
+          justify-content: center;
+          border-radius: 20px;
+          margin-top: 0px;
+          padding: 10px 10px 0;
+        }
+        .header .header-wrap .nav-wrap.nav-wrap-mobile {
+          background: #fff !important;
+        }
+        .header .header-wrap .nav-wrap.nav-wrap-mobile .nav.dropdown-toggle.mobile-nav-item.collapsed {
+          font-family: "Poppins" !important;
+          font-weight: 400;
+          font-size: 16px;
+        }
+        .header .header-wrap .nav-wrap.nav-wrap-mobile .nav.dropdown-toggle.mobile-nav-item {
+          font-family: "Poppins" !important;
+          font-weight: 600;
+          font-size: 16px;
+        }
+        .mobile-navlinks-dropdown p {
+          font-size: 16px;
+          padding-bottom: 32px;
+        }
+        .nav-cta-mobile {
+          margin-bottom: 25px;
+        }
+        .header .navbarContent {
+          display: block !important;
+          overflow: auto;
+        }
+        .mobile-navicons {
+          display: block;
+          width: 100%;
+          background-color: #fff;
+        }
+        .globe-mobile {
+          display: block !important;
+          padding-left: 0;
+        }
+        .globe-mobile p {
+          font-size: 14px !important;
+        }
+        .globe-mobile a {
+          padding: 10px 15px 20px !important;
+          color: #383434 !important;
+          font-size: 18px;
+          display: initial;
+          font-size: 14px !important;
+        }
+        .globe-mobile .dropdown-toggle {
+          font-size: 16px !important;
+        }
+        .nav-wrap-mobile .globe-mobile .mobile-navlinks-dropdown div p:not(:first-child) {
+          padding-top: 12px !important;
+        }
+        a.nav.dropdown-toggle {
+          display: flex !important;
+          align-items: center;
+        }
+        a.nav.dropdown-toggle.collapsed:after {
+          background-image: url(https://media.mcafeeassets.com/content/dam/npcld/icons/gray-arrowdwn.svg);
+          width: 10px;
+          height: 6px;
+          transform: rotate(0deg);
+          margin: 0 0px 0 auto !important;
+        }
+        a.nav.dropdown-toggle:after {
+          background-image: url(https://media.mcafeeassets.com/content/dam/npcld/icons/nav-arrow-red.svg);
+          width: 10px;
+          height: 6px;
+          transform: rotate(180deg);
+          margin: 0 0px 0 auto !important;
+        }
+        .nav-wrap-desktop {
+          display: none;
+        }
+        .nav-wrap-mobile {
+          display: block;
+        }
+        .navHdr {
+          font-size: 16px;
+          margin-top: 0px;
+          white-space: nowrap;
+          padding-bottom: 12px;
+          font-weight: bold;
+          border-bottom: solid 1px #d1cccc;
+        }
+        .navlinks > div {
+          padding: 0px !important;
+          border-bottom: solid 1px #d1cccc;
+        }
+      }
+      @media screen and (max-width: 576px) {
+        .header .header-wrap {
+          display: flex;
+          height: 61.842px;
+          padding: 0px 6.871px 0px 13.743px;
+          align-items: flex-start;
+          gap: 17.178px;
+        }
+        .header.new-header .logo-wrap {
+          padding-top: 19.3px !important;
+          padding-bottom: 19.3px !important;
+        }
+        .icons-wrap a.hamburger-btn.hamburger-newnav-btn {
+          padding: 6.871px;
+        }
+        .header .logo-wrap .logo {
+          width: 117.671px !important;
+          height: 23.191px !important;
+        }
+      }
+      .header ul.subnavlinks li ul {
+        margin: 0px !important;
+      }
+      #top_herohm .nav__logo__link {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        font-size: 0.8rem;
+      }
+      @media screen and (max-width: 1167px) {
+        .header .icons-wrap .navlinks.d-none.d-lg-flex {
+          display: none !important;
+        }
+      }
+      .dropdown > a {
+        background: none;
+        border: none;
+        border-radius: none;
+        box-shadow: none;
+        color: none;
+      }
+      .dropdown > a:hover {
+        border: none;
+        box-shadow: none;
+      }
+      .tnav-item a:hover {
+        color: #b42318 !important;
+      }
+      .header ul.navlinks li a,
+      .header ul.navlinks li a:visited {
+        font-family: "Poppins";
+      }
+      .header ul.subnavlinks li .navHdr {
+        border-bottom: none;
+        color: #667085 !important;
+      }
+      .header .subnavlinks a:hover {
+        color: #b42318 !important;
+        border-color: #b42318 !important;
+      }
+      .nav-cta {
+        background: #fff;
+        color: #475467 !important;
+        border: 1px solid #475467 !important;
+        padding: 10px 18px !important;
+        transition: all 0.25s ease-out;
+        cursor: pointer;
+      }
+      .nav-cta-mobile {
+        background: #fff !important;
+        color: #101828 !important;
+        border: 1px solid #101828 !important;
+        border-radius: 10px !important;
+        cursor: pointer;
+      }
+      @media (min-width: 0px) and (max-width: 1167px) {
+        .nav-cta {
+          display: none !important;
+        }
+      }
+      @media only screen and (min-width: 1366px) {
+        p.total-protection-desc {
+          font-size: 14px;
+        }
+      }
+      @media screen and (min-width: 1167px) {
+        .wrapper .header ul.navlinks li.dropdown.open {
+          background: none !important;
+        }
+      }
+      @media screen and (min-width: 1167px) {
+        .wrapper .header ul.navlinks li.dropdown.open {
+          background: none !important;
+        }
+      }
+      @media only screen and (min-width: 1168px) {
+        .wrapper .header ul.navlinks li#tnav4.dropdown.open {
+          background: none !important;
+        }
+      }
+      @media only screen and (min-width: 1200px) {
+        .wrapper .header ul.navlinks li#tnav4.dropdown.open {
+          background: none;
+        }
+      }
+      @media only screen and (min-width: 1600px) {
+        .wrapper .header ul.navlinks li#tnav4.dropdown.open {
+          background: none !important;
+        }
+      }
+      @media only screen and (min-width: 1900px) {
+        .wrapper .header ul.navlinks li#tnav4.dropdown.open {
+          background: none !important;
+        }
+      }
+      .header ul.navlinks li a,
+      .header ul.navlinks li a.nav.dropdown-toggle,
+      .header .subnavContainer.dropdown-menu .subnavContent ul li ul li a {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        line-height: 24px;
+      }
+      .subnavContainer {
+        background-color: #fafafa !important;
+      }
+      .header .header-wrap .nav-wrap.nav-wrap-mobile {
+        font-family: "Poppins" !important;
+        font-weight: 400 !important;
+      }
+      .total-protection-desc {
+        font-family: "Poppins" !important;
+        font-weight: 400;
+      }
+      .navHdr {
+        color: #667085;
+        font-size: 14px;
+        font-weight: 600;
+        border-bottom: none !important;
+        margin-bottom: 0px !important;
+        padding-bottom: 0px !important;
+      }
+      .navlinks > div {
+        border-bottom: none !important;
+      }
+      @media only screen and (min-width: 1168px) {
+        .header ul.subnavlinks li ul li {
+          margin-top: 12px;
+          padding-top: 12px !important;
+          padding-bottom: 12px !important;
+        }
+        .wrapper.bg-black .header #tnav1 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav1 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav2 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav2 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(48% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav3 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav3 .subnavContent {
+          margin-left: 60% !important;
+          width: calc(40% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav4 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav4 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav5 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav5 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+      }
+      @media only screen and (min-width: 1200px) {
+        .header ul.subnavlinks li .navHdr {
+          font-size: 14px !important;
+        }
+        .header ul.subnavlinks li ul li {
+          margin-top: 12px;
+          padding-top: 12px !important;
+          padding-bottom: 12px !important;
+        }
+        .wrapper.bg-black .header #tnav1 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav1 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav2 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav2 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(48% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav3 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav3 .subnavContent {
+          margin-left: 60% !important;
+          width: calc(40% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav4 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav4 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav5 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav5 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav10 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+      }
+      @media only screen and (min-width: 1366px) {
+        .header ul.subnavlinks li .navHdr {
+          font-size: 14px !important;
+        }
+        .header ul.subnavlinks li ul li {
+          margin-top: 12px;
+          padding-top: 12px !important;
+          padding-bottom: 12px !important;
+        }
+        .wrapper.bg-black .header #tnav1 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav1 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav2 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav2 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(48% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav3 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav3 .subnavContent {
+          margin-left: 70% !important;
+          width: calc(40% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav4 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav4 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav5 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav5 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav10 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+      }
+      @media only screen and (min-width: 1600px) {
+        .header ul.subnavlinks li .navHdr {
+          font-size: 14px !important;
+        }
+        .header ul.subnavlinks li ul li {
+          margin-top: 12px;
+          padding-top: 12px !important;
+          padding-bottom: 12px !important;
+        }
+        .wrapper.bg-black .header #tnav1 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav1 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav2 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav2 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(48% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav3 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav3 .subnavContent {
+          margin-left: 70% !important;
+          width: calc(40% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav4 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav4 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav5 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav5 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav10 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+      }
+      @media only screen and (min-width: 1900px) {
+        .header ul.subnavlinks li .navHdr {
+          font-size: 14px !important;
+        }
+        .header ul.subnavlinks li ul li {
+          margin-top: 12px;
+          padding-top: 12px !important;
+          padding-bottom: 12px !important;
+        }
+        .wrapper.bg-black .header #tnav1 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav1 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav2 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav2 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(48% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav3 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav3 .subnavContent {
+          margin-left: 70% !important;
+          width: calc(40% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav4 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav4 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav5 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+        .header #tnav5 .subnavContent {
+          margin-left: 12% !important;
+          width: calc(60% * 3) !important;
+        }
+        .wrapper.bg-black .header #tnav10 .subnavContainer.dropdown-menu {
+          width: 100% !important;
+          margin-left: 0% !important;
+          margin-right: 0% !important;
+        }
+      }
+      #tnav10 a.nav.dropdown-toggle:after {
+        content: "";
+        background-image: none !important;
+        height: 5px;
+        width: 7px;
+        background-repeat: no-repeat;
+        display: inline-block;
+      }
+      .navlinks #tnav10 .global-svg {
+        fill: #475467;
+      }
+      .navlinks .tnav-item.open a[data-bs-toggle] {
+        color: #b42318 !important;
+      }
+      .header .header-wrap .nav-wrap.nav-wrap-mobile .nav.dropdown-toggle.mobile-nav-item.collapsed {
+        color: #101828 !important;
+      }
+      .header .header-wrap .nav-wrap.nav-wrap-mobile .nav.dropdown-toggle.mobile-nav-item {
+        color: #b42318 !important;
+        padding: 12px 16px;
+      }
+      .mobile-navicons .globe-mobile .mobile-nav-item.collapsed .global-svg {
+        fill: #101828 !important;
+      }
+      .mobile-navicons .globe-mobile .mobile-nav-item .global-svg {
+        fill: #b42318 !important;
+      }
+      .wrapper.bg-black .header .subnavContainer.dropdown-menu {
+        border-radius: 0px !important;
+        padding: 32px 48px !important;
+      }
+      @media (max-width: 1167px) {
+        .mobile-navlinks-dropdown p {
+          font-size: 16px;
+          font-weight: 600;
+          padding-bottom: 0px;
+        }
+        .mobile-navlinks-dropdown p.total-protection-desc {
+          color: #475467;
+          font-family: Inter;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 20px;
+        }
+      }
+      .header .logo-wrap .logo {
+        display: block;
+        margin: 16px 0;
+        text-indent: -999px;
+        width: 137px;
+        height: 27px;
+      }
+      .total-protection-display {
+        display: flex;
+        padding: 12px 0px;
+        align-items: flex-start;
+        gap: 16px;
+        align-self: stretch;
+      }
+      .nav-wrap-mobile .mobile-navlinks-dropdown p {
+        padding-bottom: 12px;
+      }
+      .nav-wrap-mobile .navHdr {
+        font-size: 14px !important;
+      }
+      .mobile-navlinks-dropdown p.total-protection-desc {
+        padding-bottom: 0 !important;
+        padding-left: 48px !important;
+      }
+      .hamburger-btn span {
+        -webkit-transition: all 0 linear !important;
+        transition: all 0s linear !important;
+        height: 2px !important;
+      }
+      .makeHeaderTransparent .logo-wrap,
+      .makeHeaderTransparent,
+      .makeHeaderTransparent .header-wrap,
+      .makeHeaderTransparent .nav-cta,
+      .makeHeaderTransparent .nav-wrap {
+        background-color: transparent !important;
+      }
+      .makeHeaderTransparent .logo-wrap {
+        border-bottom: 0;
+      }
+      .nav-cta:hover {
+        background: #475467 !important;
+        color: #fff !important;
+      }
+      .header ul.navlinks li a,
+      .header ul.navlinks li a:visited {
+        color: #454545;
+      }
+      .new-header:has(.show) {
+        background-color: #fff !important;
+      }
+      .new-header:has(.tnav-item.open) {
+        background-color: #fff !important;
+      }
+      .subnavContent:has(.cmp-regionselector) {
+        margin-left: none !important;
+        width: 100% !important;
+      }
+      .subnavContainer.support-dropdown.dropdown-menu.country-section hr {
+        display: none !important;
+      }
+      .subnavContainer.support-dropdown.dropdown-menu.country-section p a {
+        margin: 0 !important;
+      }
+      @media (max-width: 1220px) {
+        #tnav15,
+        #tnav16 {
+          display: none;
+        }
+      }
+
+      /* hero */
+      /*! CSS Used from: https://media.mcafeeassets.com/etc.clientlibs/ecom-aemcs-frontend/npcld/themes/theme-consumer-fdr-redesign.lc-6c88ef3a65a7aaac665ad96d31c0adb3-lc.min.css */
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+      }
+      h2,
+      h1 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        line-height: 1.2;
+      }
+      h1 {
+        font-size: calc(1.375rem + 1.5vw);
+      }
+      @media (min-width: 1200px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+      }
+      h2 {
+        font-size: calc(1.325rem + 0.9vw);
+      }
+      @media (min-width: 1200px) {
+        h2 {
+          font-size: 2rem;
+        }
+      }
+      sup {
+        position: relative;
+        font-size: 0.75em;
+        line-height: 0;
+        vertical-align: baseline;
+      }
+      sup {
+        top: -0.5em;
+      }
+      a {
+        color: var(--bs-link-color);
+        text-decoration: underline;
+      }
+      a:hover {
+        color: var(--bs-link-hover-color);
+      }
+      img {
+        vertical-align: middle;
+      }
+      button {
+        border-radius: 0;
+      }
+      button:focus:not(:focus-visible) {
+        outline: 0;
+      }
+      button {
+        margin: 0;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+      }
+      button {
+        text-transform: none;
+      }
+      button,
+      [type="button"] {
+        -webkit-appearance: button;
+      }
+      button:not(:disabled),
+      [type="button"]:not(:disabled) {
+        cursor: pointer;
+      }
+      .img-fluid {
+        max-width: 100%;
+        height: auto;
+      }
+      .carousel {
+        position: relative;
+      }
+      .carousel-inner {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+      }
+      .carousel-inner:after {
+        display: block;
+        clear: both;
+        content: "";
+      }
+      .carousel-item {
+        position: relative;
+        display: none;
+        float: left;
+        width: 100%;
+        margin-right: -100%;
+        backface-visibility: hidden;
+        transition: transform 0.6s ease-in-out;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .carousel-item {
+          transition: none;
+        }
+      }
+      .carousel-item.active {
+        display: block;
+      }
+      .carousel-fade .carousel-item {
+        opacity: 0;
+        transition-property: opacity;
+        transform: none;
+      }
+      .carousel-fade .carousel-item.active {
+        z-index: 1;
+        opacity: 1;
+      }
+      .carousel-control-prev,
+      .carousel-control-next {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 15%;
+        padding: 0;
+        color: #fff;
+        text-align: center;
+        background: none;
+        border: 0;
+        opacity: 0.5;
+        transition: opacity 0.15s ease;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .carousel-control-prev,
+        .carousel-control-next {
+          transition: none;
+        }
+      }
+      .carousel-control-prev:hover,
+      .carousel-control-prev:focus,
+      .carousel-control-next:hover,
+      .carousel-control-next:focus {
+        color: #fff;
+        text-decoration: none;
+        outline: 0;
+        opacity: 0.9;
+      }
+      .carousel-control-prev {
+        left: 0;
+      }
+      .carousel-control-next {
+        right: 0;
+      }
+      .carousel-control-prev-icon,
+      .carousel-control-next-icon {
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        background-size: 100% 100%;
+      }
+      .carousel-control-prev-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+      }
+      .carousel-control-next-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+      }
+      .visually-hidden {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+      }
+      .d-flex {
+        display: flex !important;
+      }
+      .d-none {
+        display: none !important;
+      }
+      .mb-3 {
+        margin-bottom: 1rem !important;
+      }
+      .rounded-pill {
+        border-radius: var(--bs-border-radius-pill) !important;
+      }
+      .d-flex {
+        display: flex !important;
+      }
+      .d-none {
+        display: none !important;
+      }
+      .mr-3 {
+        margin-right: 1rem !important;
+      }
+      .mb-3 {
+        margin-bottom: 1rem !important;
+      }
+      .rounded-pill {
+        border-radius: var(--bs-border-radius-pill) !important;
+      }
+      @media (max-width: 575.98px) {
+        h1 {
+          font-size: 2rem;
+        }
+      }
+      @media (max-width: 575.98px) {
+        h2 {
+          font-size: 1.75rem;
+        }
+      }
+      *:focus {
+        outline: none;
+      }
+      a {
+        text-decoration: none;
+      }
+      /*! CSS Used from: https://media.mcafeeassets.com/content/dam/npcld/custom-scripts/organic-site/mcafee-redesign/css/mcafee-redesign-mfe-edits.css */
+      a:hover {
+        text-decoration: none;
+      }
+      @media (max-width: 575.98px) {
+        a {
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+        }
+      }
+      .active {
+        opacity: 1;
+      }
+      .carousel,
+      .carousel-inner {
+        height: 100%;
+      }
+      @media screen and (min-width: 900px) {
+        .carousel-item:before {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.8) 65%, #000 100%, rgba(21, 21, 21, 0.9) 97%);
+        }
+      }
+      @media (min-width: 993px) {
+        h1 {
+          font-size: 48px;
+          font-weight: 600;
+          line-height: 56px;
+          letter-spacing: -1%;
+        }
+        h2 {
+          font-size: 40px;
+          font-weight: 600;
+          line-height: 48px;
+        }
+      }
+      @media (min-width: 577px) and (max-width: 992px) {
+        h1 {
+          font-size: 40px;
+          font-weight: 600;
+          line-height: 48px;
+        }
+        h2 {
+          font-size: 32px;
+          font-weight: 600;
+          line-height: 40px;
+        }
+      }
+      @media (max-width: 576px) {
+        h2 {
+          font-size: 32px !important;
+          line-height: 40px !important;
+          font-weight: 600 !important;
+        }
+      }
+      /*! CSS Used from: Embedded */
+      @media (max-width: 767px) {
+        #mcafeeHeroCarousel .carousel-inner .carousel-item {
+          min-height: 900px;
+        }
+      }
+      @media (max-width: 1020px) {
+        #mcafeeHeroCarousel .carousel-inner .carousel-item {
+          min-height: 600px;
+        }
+      }
+      @media (min-width: 600px) and (max-width: 768px) {
+        #mcafeeHeroCarousel .hero__contentWrapper {
+          margin-top: 30% !important;
+        }
+      }
+      #mcafeeHeroCarousel .hero__contentWrapper .hero__content {
+        gap: 1.5rem !important;
+      }
+      /*! CSS Used from: https://media.mcafeeassets.com/content/dam/npcld/custom-scripts/organic-site/mcafee-redesign/css/global-nav-fdr-fc.css */
+      .nav-cta {
+        background: #fff;
+        color: #475467 !important;
+        border: 1px solid #475467 !important;
+        padding: 10px 18px !important;
+        transition: all 0.25s ease-out;
+        cursor: pointer;
+      }
+      @media (min-width: 0px) and (max-width: 1167px) {
+        .nav-cta {
+          display: none !important;
+        }
+      }
+      .nav-cta:hover {
+        background: #475467 !important;
+        color: #fff !important;
+      }
+      /*! CSS Used from: https://media.mcafeeassets.com/content/dam/npcld/custom-scripts/organic-site/mcafee-redesign/css/McafeeSlider.css?v=1.1 */
+      #mcafeeHeroCarousel {
+        font-family: "Poppins", sans-serif;
+      }
+      #mcafeeHeroCarousel .carousel__controls button {
+        opacity: 0;
+        z-index: 2;
+        width: 30px;
+      }
+      #mcafeeHeroCarousel .carousel-inner .carousel-item {
+        overflow: hidden;
+        z-index: 2;
+      }
+      #mcafeeHeroCarousel .carousel-inner .carousel-item::before {
+        position: absolute;
+        left: 0;
+        top: 0;
+        content: "";
+        background-image: var(--bg-image);
+        width: 100%;
+        height: 100%;
+        background-position-x: center;
+        background-position-y: bottom;
+        background-size: cover;
+        background-repeat: no-repeat;
+        z-index: -1;
+      }
+      @media (max-width: 820px) {
+        #mcafeeHeroCarousel .carousel-inner .carousel-item::before {
+          background-image: var(--bg-m-image);
+          background-position-y: 90%;
+        }
+      }
+      @media (max-width: 768px) {
+        #mcafeeHeroCarousel .carousel-inner .carousel-item::before {
+          background-position-y: 72%;
+        }
+      }
+      #mcafeeHeroCarousel .hero__contentWrapper {
+        max-width: 600px;
+        height: 100%;
+        padding: 1rem;
+        margin-left: 10%;
+        margin-top: 1%;
+      }
+      @media (min-width: 1860px) {
+        #mcafeeHeroCarousel .hero__contentWrapper {
+          -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+        }
+      }
+      @media (max-width: 1600px) {
+        #mcafeeHeroCarousel .hero__contentWrapper {
+          -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+        }
+      }
+      @media (max-width: 1500px) {
+        #mcafeeHeroCarousel .hero__contentWrapper {
+          margin-left: 5%;
+        }
+      }
+      @media (max-width: 1380px) {
+        #mcafeeHeroCarousel .hero__contentWrapper {
+          -webkit-transform: scale(0.85);
+          transform: scale(0.85);
+        }
+      }
+      @media (max-width: 1280px) {
+        #mcafeeHeroCarousel .hero__contentWrapper {
+          -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+        }
+      }
+      @media (max-width: 1200px) {
+        #mcafeeHeroCarousel .hero__contentWrapper {
+          -webkit-transform: scale(0.7);
+          transform: scale(0.7);
+          margin-left: -2%;
+          margin-top: 2%;
+        }
+      }
+      @media (max-width: 991px) {
+        #mcafeeHeroCarousel .hero__contentWrapper {
+          margin-top: 5%;
+        }
+      }
+      #mcafeeHeroCarousel .hero__contentWrapper .hero__content {
+        height: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        gap: 2rem;
+      }
+      #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__title {
+        font-size: 3em;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__title span {
+        color: #af0707;
+      }
+      #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__desc {
+        font-size: 1.25rem;
+      }
+      #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__cta {
+        max-width: 10rem;
+      }
+      #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__cta a {
+        padding: 12px 24px;
+        display: inline-block;
+        width: 100%;
+        background-color: #af0707;
+        text-align: center;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 3rem;
+        -webkit-transition: all 250ms ease;
+        transition: all 250ms ease;
+        font-size: 1.1rem;
+      }
+      #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__cta a:hover {
+        background-color: #c01818;
+      }
+      #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__cta a:focus {
+        background-color: #871212;
+      }
+      @media (max-width: 820px) {
+        #mcafeeHeroCarousel .hero__contentWrapper {
+          margin-top: 10%;
+          margin-right: auto;
+          margin-left: auto;
+          max-width: 100%;
+          -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+        }
+        #mcafeeHeroCarousel .hero__contentWrapper .hero__content {
+          -webkit-box-pack: start;
+          -ms-flex-pack: start;
+          justify-content: flex-start;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          text-align: center;
+        }
+        #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__title {
+          font-size: 2.5rem;
+        }
+        #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__cta {
+          width: 100%;
+          max-width: 10rem;
+        }
+        #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__cta a {
+          padding: 14px 24px;
+        }
+      }
+      @media (max-width: 768px) {
+        #mcafeeHeroCarousel .hero__contentWrapper {
+          margin-top: 20%;
+          -webkit-transform: scale(1);
+          transform: scale(1);
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
+        #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__title {
+          font-size: 1.8rem;
+        }
+        #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__desc {
+          font-size: 1rem;
+        }
+      }
+      @media (max-width: 600px) {
+        #mcafeeHeroCarousel .hero__contentWrapper {
+          margin-top: 45%;
+          padding-left: 2rem;
+          padding-right: 2rem;
+        }
+        #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__title {
+          font-size: 1.8rem !important;
+          line-height: 1.3 !important;
+        }
+        #mcafeeHeroCarousel .hero__contentWrapper .hero__content .hero__desc {
+          font-size: 1rem;
+        }
+      }
+      /*! CSS Used from: Embedded */
+      .hero__contentWrapper .hero__cta a {
+        min-width: 148px;
+        text-wrap: nowrap;
+      }
+      .hero__contentWrapper .hero__cta button {
+        min-width: 148px;
+        display: block !important;
+        padding: 12px 24px !important;
+        text-wrap: nowrap;
+      }
+      @media (max-width: 820px) {
+        .hero__contentWrapper .hero__cta button {
+          padding: 14px 24px !important;
+        }
+      }
+      @media (min-width: 1281px) and (max-width: 1600px) {
+        #mcafeeHeroCarousel .carousel-inner {
+          max-height: 88vh;
+        }
+      }
+    </style>
+    <!-- 3. Your mobile-first CSS -->
+    <!-- <link rel="stylesheet" href="css/mobile.css">  -->
+    <!-- 4. Your desktop overrides -->
+    <!-- <link rel="stylesheet" href="css/desktop.css" media="(min-width: 768px)"> -->
+    <!-- 5. Your additional external CSS (non-critical) -->
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="style.css" /></noscript>
+  </head>
+  <body>
+    <!-- nav -->
+    <div class="header new-header is-fixed makeHeaderTransparent">
+      <!---->
+      <div class="navbarContainer">
+        <div class="navbarContent">
+          <div class="header-wrap align-items-center">
+            <div class="logo-wrap mr-3">
+              <a aria-label="company logo for home page" data-navelement="companylogo" data-pagesection="top nav" class="logo ppg-mcafee-nav-logo" href="/en-us/index.html"> <img src="https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en/company-logo/McAfeeHzRed.svg" alt="McAfee logo" /></a>
+            </div>
+            <div class="nav-wrap nav-wrap-desktop">
+              <ul class="navlinks">
+                <li class="tnav-item dropdown" id="tnav1">
+                  <a aria-label="Products" data-navelement="products" data-pagesection="top nav" href="#" class="nav dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true" aria-expanded="false">Products</a>
+                  <div class="subnavContainer products-dropdown dropdown-menu" aria-labelledby="tnav1">
+                    <div class="subNavWrapper">
+                      <div class="subnavContent">
+                        <ul class="subnavlinks">
+                          <li>
+                            <h2 class="navHdr d-md-flex flex-column flex-md-row align-items-start">All-In-One Protection</h2>
+                            <ul>
+                              <li class="mb-0 total-protection-display">
+                                <div>
+                                  <a aria-label="McAfee+ Individual Plans" href="/en-us/identity-theft/protection.html" class="total-protection-nav-link nav__logo__link" data-navelement="individual-protection" data-pagesection="top nav"> McAfee+ Individual Plans </a>
+                                  <p class="total-protection-desc pl-0">Complete privacy, identity and device protection for individuals.</p>
+                                </div>
+                              </li>
+                              <li class="mb-0 total-protection-display">
+                                <div>
+                                  <a aria-label="McAfee+ Family Plans" href="/en-us/identity-theft/family.html" class="total-protection-nav-link nav__logo__link" data-navelement="family-protection" data-pagesection="top nav" style="cursor: pointer"> McAfee+ Family Plans </a>
+                                  <p class="total-protection-desc pl-0">Complete privacy, identity and device protection for up to 6 family members.</p>
+                                </div>
+                              </li>
+                              <li class="mb-0 total-protection-display">
+                                <div>
+                                  <a aria-label="McAfee Total Protection Plans" href="/en-us/antivirus/mcafee-total-protection.html" class="total-protection-nav-link nav__logo__link" data-navelement="total-protection" data-pagesection="top nav" style="cursor: pointer">McAfee Total Protection Plans​ </a>
+                                  <p class="total-protection-desc pl-0">Basic device and identity protection for individuals</p>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h2 class="navHdr">Other Products &amp; Services</h2>
+                            <ul>
+                              <li class="mb-0"><a aria-label="Antivirus" href="/en-us/antivirus.html" class="antivirus-nav-link" data-navelement="antivirus" data-pagesection="top nav"> Antivirus </a></li>
+                              <li class="mb-0"><a aria-label="Scam Detector" href="https://www.mcafee.com/en-us/scam-detector/" class="antivirus-nav-link" data-navelement="scam-protection" data-pagesection="top nav"> Scam Detector </a></li>
+                              <li class="mb-0"><a aria-label="Virtual Private Network (VPN)" href="/en-us/vpn.html" class="vpn-nav-link" data-navelement="vpn" data-pagesection="top nav"> Virtual Private Network (VPN)</a></li>
+                              <li class="mb-0"><a aria-label="Mobile Security" href="https://www.mcafee.com/en-us/antivirus/mobile.html" class="mobile-security-nav-link" data-navelement="mobile-security" data-pagesection="top nav"> Mobile Security</a></li>
+                              <li class="mb-0"><a href="/en-us/consumer-support/pc-optimizer.html" class="safe-connect-nav-link" data-navelement="pc-optimizer" data-pagesection="top nav" aria-label="PC Optimizer"> PC Optimizer</a></li>
+                              <li class="mb-0"><a href="/en-us/mcafee-assist.html" class="safe-connect-nav-link" data-navelement="mcafee-assist" data-pagesection="top nav" aria-label="McAfee Assist"> McAfee Assist </a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h2 class="navHdr">Free Tools &amp; Downloads</h2>
+                            <ul>
+                              <li class="mb-0"><a href="/en-us/safe-browser/mcafee-webadvisor.html" class="safe-connect-nav-link" data-navelement="web-protection" data-pagesection="top nav" aria-label="Web Protection"> Web Protection</a></li>
+                              <li class="mb-0"><a href="/en-us/antivirus/free.html" class="safe-connect-nav-link" data-navelement="free-antivirus-trial" data-pagesection="top nav" aria-label="Free Antivirus Trial"> Free Antivirus Trial </a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/en-us/antivirus/mcafee-security-scan-plus.html" class="safe-connect-nav-link" data-navelement="device-security-scan" data-pagesection="top nav" aria-label="Device Security Scan "> Device Security Scan </a></li>
+                              <li class="mb-0"><a href="/en-us/password-generator.html" class="safe-connect-nav-link" data-navelement="password-generator" data-pagesection="top nav" aria-label="Password Generator"> Password Generator </a></li>
+                            </ul>
+                            <h2 class="navHdr mt-5">Get the app</h2>
+                            <ul>
+                              <li class="mb-0"><a href="/en-us/antivirus/mobile.html" class="safe-connect-nav-link" data-navelement="get-the-app-mobile" data-pagesection="top nav" aria-label=" Mobile"> Mobile</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="tnav-item dropdown" id="tnav2">
+                  <a data-navelement="features" data-pagesection="top nav" href="#" class="nav dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true" aria-expanded="false" aria-label="Features">Features</a>
+                  <div class="subnavContainer features-dropdown dropdown-menu" aria-labelledby="tnav2">
+                    <div class="subNavWrapper">
+                      <div class="subnavContent">
+                        <ul class="subnavlinks">
+                          <li>
+                            <h2 class="navHdr">Keep Me Private Online</h2>
+                            <ul>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/personal-data-cleanup/" class="total-protection-nav-link" data-navelement="personal-data-cleanup" data-pagesection="top nav" aria-label="Personal Data Cleanup">Personal Data Cleanup</a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/online-account-cleanup/" class="total-protection-nav-link" data-navelement="online-account-cleanup" data-pagesection="top nav" aria-label="Online Account Cleanup">Online Account Cleanup</a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/vpn/" class="antivirus-trial-nav-link" data-navelement="vpn" data-pagesection="top nav" aria-label="VPN (Virtual Private Network)">VPN (Virtual Private Network)</a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/social-privacy-manager/" class="antivirus-trial-nav-link" data-navelement="social-privacy-manager" data-pagesection="top nav" aria-label="Social Privacy Manager">Social Privacy Manager</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h2 class="navHdr">Safeguard My Identity</h2>
+                            <ul>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/identity-monitoring/" class="total-protection-nav-link" data-navelement="identity-monitoring" data-pagesection="top nav" aria-label="Identity Monitoring">Identity Monitoring</a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/credit-monitoring/" class="antivirus-trial-nav-link" data-navelement="credit-monitoring" data-pagesection="top nav" aria-label="Credit Monitoring">Credit Monitoring</a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/security-freeze/" class="antivirus-trial-nav-link" data-navelement="security-freeze" data-pagesection="top nav" aria-label="Security Freeze">Security Freeze</a></li>
+                              <li class="mb-0 d-flex"><a href="https://www.mcafee.com/learn/identity-theft-coverage/" class="antivirus-trial-nav-link mt-n1" data-navelement="identity-theft-coverage-restoration" data-pagesection="top nav" aria-label="Identity Theft Coverage &amp; Restoration"> Identity Theft Coverage &amp; Restoration</a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/password-manager/" class="antivirus-trial-nav-link" data-navelement="password-manager" data-pagesection="top nav" aria-label="Password Manager">Password Manager</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h2 class="navHdr">Protect My Devices</h2>
+                            <ul>
+                              <li class="mb-0"><a href="/en-us/antivirus.html" class="antivirus-trial-nav-link" data-navelement="protect-my-devices-antivirus" data-pagesection="top nav" aria-label="Antivirus"> Antivirus </a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/text-scam-detector/" class="antivirus-trial-nav-link" data-navelement="scam-protection" data-pagesection="top nav" aria-label="Scam Detector"> Scam Detector </a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/web-protection/" class="antivirus-trial-nav-link" data-navelement="web-protection" data-pagesection="top nav" aria-label="Web Protection"> Web Protection </a></li>
+                              <li class="mb-0"><a href="/en-us/antivirus/firewall.html" class="antivirus-trial-nav-link" data-navelement="web-protection" data-pagesection="top nav" aria-label="Firewall"> Firewall </a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h2 class="navHdr">Protect My Family</h2>
+                            <ul>
+                              <li class="mb-0"><a href="https://www.mcafee.com/en-us/antivirus/protection-score.html" class="total-protection-nav-link" data-navelement="protection-score" data-pagesection="top nav" aria-label="Protection Score"> Protection Score</a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/parental-controls/" class="total-protection-nav-link" data-navelement="parental-controls" data-pagesection="top nav" aria-label="Parental Controls">Parental Controls</a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/family-plans/" class="total-protection-nav-link" data-navelement="family-plans" data-pagesection="top nav" aria-label="Family Plans">Family Plans</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="tnav-item dropdown" id="tnav5">
+                  <a data-navelement="resources" data-pagesection="top nav" href="#" class="nav dropdown-toggle d-flex align-items-center" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true" aria-expanded="false" aria-label="Resources">Resources</a>
+                  <div class="subnavContainer resources-dropdown dropdown-menu" aria-labelledby="tnav5">
+                    <div class="subNavWrapper">
+                      <div class="subnavContent">
+                        <ul class="subnavlinks">
+                          <li>
+                            <h2 class="navHdr">Stay Updated</h2>
+                            <ul>
+                              <li class="mb-0"><a href="https://www.mcafee.com/blogs/" class="total-protection-nav-link" data-navelement="mcafee-blog" data-pagesection="top nav" aria-label="McAfee Blog">McAfee Blog</a></li>
+                              <li class="mb-0"><a href="/en-us/resources/reports-and-guides.html" class="total-protection-nav-link" data-navelement="reports-and-guides" data-pagesection="top nav" aria-label="Reports and Guides">Reports and Guides</a></li>
+                              <li class="mb-0"><a href="https://www.youtube.com/McAfee" class="total-protection-nav-link" data-navelement="mcafee-on-youtube" data-pagesection="top nav" aria-label="McAfee on YouTube">McAfee on YouTube</a></li>
+                              <li class="mb-0"><a href="/en-us/cyber-scam/customer-scam-awareness.html" class="total-protection-nav-link" data-navelement="prevent-spam-and-phishing" data-pagesection="top nav" aria-label="Prevent Spam and Phishing">Prevent Spam and Phishing</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h2 class="navHdr">Learn More</h2>
+                            <ul>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/" class="total-protection-nav-link" data-navelement="learn-at-mcafee" data-pagesection="top nav" aria-label="Learn at McAfee">Learn at McAfee</a></li>
+                              <li class="mb-0"><a href="/en-us/antivirus.html" class="total-protection-nav-link" data-navelement="what-is-antivirus" data-pagesection="top nav" aria-label="What is Antivirus?">What is Antivirus?</a></li>
+                              <li class="mb-0"><a href="/en-us/vpn.html" class="total-protection-nav-link" data-navelement="what-is-a-vpn" data-pagesection="top nav" aria-label="What is a VPN?">What is a VPN?</a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/en-us/identity-theft.html" class="total-protection-nav-link" data-navelement="what is identity theft" data-pagesection="top nav" aria-label="What is Identity Theft?">What is Identity Theft?</a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/learn/mcafee-small-business/" class="total-protection-nav-link" data-navelement="McAfee Business Protection" data-pagesection="top nav" aria-label="McAfee Business Protection">McAfee Business Protection</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h2 class="navHdr">Press &amp; News</h2>
+                            <ul>
+                              <li class="mb-0"><a href="https://www.mcafee.com/en-us/consumer-corporate/newsroom.html" class="total-protection-nav-link" data-navelement="mcafee-newsroom" data-pagesection="top nav" aria-label="McAfee Newsroom">McAfee Newsroom</a></li>
+                              <li class="mb-0"><a href="/en-us/ai-news/ai-hub.html" class="total-protection-nav-link" data-navelement="mcafee-newsroom" data-pagesection="top nav" aria-label="AI News &amp; Scams">AI News &amp; Scams</a></li>
+                              <li class="mb-0"><a href="https://www.mcafee.com/ai/" class="total-protection-nav-link" data-navelement="mcafee-smart-ai-hub" data-pagesection="top nav" aria-label="AI Hub">AI Hub</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="tnav-item dropdown" id="tnav4">
+                  <a data-navelement="about-us" data-pagesection="top nav" href="#" class="nav dropdown-toggle d-flex align-items-center show" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true" aria-expanded="true" aria-label="About Us">About Us</a>
+                  <div class="subnavContainer about-us-dropdown dropdown-menu show" aria-labelledby="tnav4" data-bs-popper="static">
+                    <div class="subNavWrapper">
+                      <div class="subnavContent">
+                        <ul class="subnavlinks">
+                          <li>
+                            <h2 class="navHdr">Our Company</h2>
+                            <ul>
+                              <li class="mb-0"><a href="/en-us/consumer-corporate/about.html" class="total-protection-nav-link" data-navelement="company-overview" data-pagesection="top nav" aria-label="Company Overview">Company Overview</a></li>
+                              <li class="mb-0"><a href="/en-us/consumer-corporate/about/awards.html" class="total-protection-nav-link" data-navelement="awards-reviews" data-pagesection="top nav" aria-label="Awards &amp; Reviews">Awards &amp; Reviews</a></li>
+                              <li class="mb-0"><a href="/en-us/consumer-corporate/investors.html" class="total-protection-nav-link" data-navelement="investors" data-pagesection="top nav" aria-label="Investors">Investors</a></li>
+                              <li class="mb-0"><a href="/en-us/why-mcafee.html" class="total-protection-nav-link" data-navelement="why-mcafee" data-pagesection="top nav" aria-label="Why McAfee">Why McAfee</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h2 class="navHdr">Our Efforts</h2>
+                            <ul>
+                              <li class="mb-0"><a href="/en-us/consumer-corporate/inclusion-diversity.html" class="total-protection-nav-link" data-navelement="inclusion-diversity" data-pagesection="top nav" aria-label="Inclusion &amp; Diversity">Inclusion &amp; Diversity</a></li>
+                              <li class="mb-0"><a href="/en-us/consumer-corporate/integrity-ethics.html" class="total-protection-nav-link" data-navelement="integrity-ethics" data-pagesection="top nav" aria-label="Integrity &amp; Ethics">Integrity &amp; Ethics</a></li>
+                              <li class="mb-0"><a href="/en-us/consumer-support/policy/legal/public-policy.html" class="total-protection-nav-link" data-navelement="public-policy" data-pagesection="top nav" aria-label="Public Policy">Public Policy</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h2 class="navHdr">Join Us</h2>
+                            <ul>
+                              <li class="mb-0"><a href="https://careers.mcafee.com/" class="total-protection-nav-link" data-navelement="careers" data-pagesection="top nav" aria-label="Careers">Careers</a></li>
+                              <li class="mb-0"><a href="https://careers.mcafee.com/life-at-mcafee" class="total-protection-nav-link" data-navelement="life-at-mcafee" data-pagesection="top nav" aria-label="Life at McAfee">Life at McAfee</a></li>
+                              <li class="mb-0"><a href="https://careers.mcafee.com/our-teams" class="total-protection-nav-link" data-navelement="our-teams" data-pagesection="top nav" aria-label="Our Teams">Our Teams</a></li>
+                              <li class="mb-0"><a href="https://careers.mcafee.com/our-locations" class="total-protection-nav-link" data-navelement="our-locations" data-pagesection="top nav" aria-label="Our Locations">Our Locations</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="tnav-item dropdown" id="tnav15"><a aria-label="AI Hub" data-navelement="AI Hub" data-pagesection="top nav" href="https://www.mcafee.com/ai/" class="nav d-flex align-items-center" role="button" data-bs-display="static" aria-haspopup="false" style="padding-left: 11px">AI Hub</a></li>
+              </ul>
+            </div>
+            <div id="mobile-nav" class="nav-wrap nav-wrap-mobile">
+              <ul class="navlinks">
+                <div id="tnav6">
+                  <a href="#products-collapse" class="nav dropdown-toggle mobile-nav-item collapsed" data-navelement="products" data-pagesection="top nav" data-bs-display="static" role="button" aria-expanded="false" aria-controls="products-collapse" aria-haspopup="true" aria-label="Products"> Products </a>
+                  <div class="collapse mobile-navlinks-dropdown" id="products-collapse">
+                    <div class="collapse-child">
+                      <h2 class="navHdr d-flex d-md-flex flex-reverse-column align-items-start">All-In-One Protection</h2>
+                      <div>
+                        <p class="mb-0"><a aria-label="McAfee+ Individual Plans" href="/en-us/identity-theft/protection.html" class="total-protection-nav-link" data-navelement="individual-protection" data-pagesection="top nav"> McAfee+ Individual Plans </a></p>
+                        <p class="total-protection-desc" style="padding-left: 16px !important">Complete privacy, identity and device protection for individuals.</p>
+                      </div>
+                      <div>
+                        <p class="mb-0"><a aria-label="McAfee+ Family Plans" href="/en-us/identity-theft/family.html" class="total-protection-nav-link" data-navelement="family-protection" data-pagesection="top nav" style="cursor: pointer"> McAfee+ Family Plans </a></p>
+                        <p class="total-protection-desc" style="padding-left: 16px !important">Complete privacy, identity and device protection for up to 6 family members.</p>
+                      </div>
+                      <div>
+                        <p class="mb-0"><a aria-label="McAfee Total Protection Plans" href="/en-us/antivirus/mcafee-total-protection.html" class="total-protection-nav-link" data-navelement="total-protection" data-pagesection="top nav" style="cursor: pointer"> McAfee Total Protection Plans​ </a></p>
+                        <p class="total-protection-desc" style="padding-left: 16px !important">Basic device and identity protection for individuals</p>
+                      </div>
+                      <h2 class="navHdr">Other Products &amp; Services</h2>
+                      <p class="mb-0"><a aria-label="Antivirus" href="/en-us/antivirus.html" class="antivirus-nav-link" data-navelement="antivirus" data-pagesection="top nav"> Antivirus </a></p>
+                      <p class="mb-0"><a aria-label="Scam Detector" href="https://www.mcafee.com/en-us/scam-detector/" class="antivirus-nav-link" data-navelement="scam-protection" data-pagesection="top nav"> Scam Detector </a></p>
+                      <p class="mb-0"><a aria-label=" Virtual Private Network (VPN)" href="/en-us/vpn.html" class="vpn-nav-link" data-navelement="vpn" data-pagesection="top nav"> Virtual Private Network (VPN) </a></p>
+                      <p class="mb-0"><a aria-label="Mobile Security" href="https://www.mcafee.com/en-us/antivirus/mobile.html" class="mobile-security-nav-link" data-navelement="mobile-security" data-pagesection="top nav"> Mobile Security </a></p>
+                      <p class="mb-0"><a aria-label="PC Optimizer" href="/en-us/consumer-support/pc-optimizer.html" class="total-protection-nav-link" data-navelement="pc-optimizer" data-pagesection="top nav"> PC Optimizer </a></p>
+                      <p class="mb-0"><a aria-label="McAfee Assist" href="/en-us/mcafee-assist.html" class="total-protection-nav-link" data-navelement="mcafee-assist" data-pagesection="top nav"> McAfee Assist </a></p>
+                      <h2 class="navHdr">Free Tools &amp; Downloads</h2>
+                      <p class="mb-0"><a aria-label="Web Protection" href="/en-us/safe-browser/mcafee-webadvisor.html" class="total-protection-nav-link" data-navelement="web-protection" data-pagesection="top nav"> Web Protection </a></p>
+                      <p class="mb-0"><a aria-label="Free Antivirus Trial" href="/en-us/antivirus/free.html" class="total-protection-nav-link" data-navelement="free-antivirus-trial" data-pagesection="top nav"> Free Antivirus Trial </a></p>
+                      <p class="mb-0"><a aria-label="Device Security Scan " href="https://www.mcafee.com/en-us/antivirus/mcafee-security-scan-plus.html" class="total-protection-nav-link" data-navelement="device-security-scan" data-pagesection="top nav"> Device Security Scan </a></p>
+                      <p class="mb-0"><a aria-label="Password Generator" href="/en-us/password-generator.html" class="total-protection-nav-link" data-navelement="password-generator" data-pagesection="top nav"> Password Generator </a></p>
+                      <h2 class="navHdr">Get the app</h2>
+                      <p class="mb-0"><a aria-label=" Mobile" href="/en-us/antivirus/mobile.html" class="total-protection-nav-link" data-navelement="get-the-app-mobile" data-pagesection="top nav"> Mobile </a></p>
+                    </div>
+                  </div>
+                </div>
+                <div id="tnav7">
+                  <a aria-label="Features" href="#features-collapse" class="nav dropdown-toggle mobile-nav-item collapsed" data-navelement="features" data-pagesection="top nav" data-bs-display="static" role="button" aria-expanded="false" aria-controls="features-collapse" aria-haspopup="true"> Features </a>
+                  <div class="collapse mobile-navlinks-dropdown" id="features-collapse">
+                    <div class="collapse-child">
+                      <h2 class="navHdr">Keep Me Private Online</h2>
+                      <p class="mb-0"><a aria-label="Personal Data Cleanup" href="https://www.mcafee.com/learn/personal-data-cleanup/" class="total-protection-nav-link" data-navelement="personal-data-cleanup" data-pagesection="top nav">Personal Data Cleanup</a></p>
+                      <p class="mb-0"><a aria-label="Online Account Cleanup" href="https://www.mcafee.com/learn/online-account-cleanup/" class="total-protection-nav-link" data-navelement="online-account-cleanup" data-pagesection="top nav">Online Account Cleanup</a></p>
+                      <p class="mb-0"><a aria-label="VPN (Virtual Private Network)" href="https://www.mcafee.com/learn/vpn/" class="total-protection-nav-link" data-navelement="vpn" data-pagesection="top nav"> VPN (Virtual Private Network) </a></p>
+                      <p class="mb-0"><a aria-label="Social Privacy Manager" href="https://www.mcafee.com/learn/social-privacy-manager/" class="total-protection-nav-link" data-navelement="social-privacy-manager" data-pagesection="top nav"> Social Privacy Manager </a></p>
+                      <h2 class="navHdr">Safeguard My Identity</h2>
+                      <p class="mb-0"><a aria-label="Identity Monitoring" href="https://www.mcafee.com/learn/identity-monitoring/" class="total-protection-nav-link" data-navelement="identity-monitoring" data-pagesection="top nav">Identity Monitoring </a></p>
+                      <p class="mb-0"><a aria-label="" href="https://www.mcafee.com/learn/credit-monitoring/" class="total-protection-nav-link" data-navelement="credit-monitoring" data-pagesection="top nav"> Credit Monitoring </a></p>
+                      <p class="mb-0"><a aria-label="Security Freeze" href="https://www.mcafee.com/learn/security-freeze/" class="total-protection-nav-link" data-navelement="security-freeze" data-pagesection="top nav">Security Freeze </a></p>
+                      <p class="mb-0"><a aria-label="Identity Theft Coverage &amp; Restoration" href="https://www.mcafee.com/learn/identity-theft-coverage/" class="total-protection-nav-link" data-navelement="identity-theft-coverage-restoration" data-pagesection="top nav"> Identity Theft Coverage &amp; Restoration </a></p>
+                      <p class="mb-0"><a aria-label="Password Manager" href="https://www.mcafee.com/learn/password-manager/" class="total-protection-nav-link" data-navelement="password-manager" data-pagesection="top nav"> Password Manager </a></p>
+                      <h2 class="navHdr">Protect My Devices</h2>
+                      <p class="mb-0"><a aria-label="Antivirus" href="/en-us/antivirus.html" class="total-protection-nav-link" data-navelement="protect-my-devices-antivirus" data-pagesection="top nav"> Antivirus </a></p>
+                      <p class="mb-0"><a aria-label="Scam Detector" href="https://www.mcafee.com/learn/text-scam-detector/" class="total-protection-nav-link" data-navelement="scam-protection" data-pagesection="top nav"> Scam Detector </a></p>
+                      <p class="mb-0"><a aria-label="Web Protection" href="https://www.mcafee.com/learn/web-protection/" class="total-protection-nav-link" data-navelement="web-protection" data-pagesection="top nav"> Web Protection </a></p>
+                      <p class="mb-0"><a aria-label="Firewall" href="/en-us/antivirus/firewall.html" class="total-protection-nav-link" data-navelement="web-protection" data-pagesection="top nav"> Firewall </a></p>
+                      <h2 class="navHdr">Protect My Family</h2>
+                      <p class="mb-0"><a aria-label="Protection Score" href="https://www.mcafee.com/en-us/antivirus/protection-score.html" class="total-protection-nav-link" data-navelement="protection-score" data-pagesection="top nav">Protection Score</a></p>
+                      <p class="mb-0"><a aria-label="Parental Controls" href="https://www.mcafee.com/learn/parental-controls/" class="total-protection-nav-link" data-navelement="parental-controls" data-pagesection="top nav">Parental Controls</a></p>
+                      <p class="mb-0"><a aria-label="Family Plans" href="https://www.mcafee.com/learn/family-plans/" class="total-protection-nav-link" data-navelement="family-plans" data-pagesection="top nav">Family Plans</a></p>
+                    </div>
+                  </div>
+                </div>
+                <div id="tnav13">
+                  <a aria-label="Resources" href="#resources-collapse" class="nav dropdown-toggle mobile-nav-item collapsed" data-navelement="resources" data-pagesection="top nav" data-bs-display="static" role="button" aria-expanded="false" aria-controls="resources-collapse" aria-haspopup="true"> Resources </a>
+                  <div class="collapse mobile-navlinks-dropdown" id="resources-collapse">
+                    <div class="collapse-child">
+                      <h2 class="navHdr">Stay Updated</h2>
+                      <p class="mb-0"><a aria-label="McAfee Blog" href="https://www.mcafee.com/blogs/" class="total-protection-nav-link" data-navelement="mcafee-blog" data-pagesection="top nav"> McAfee Blog </a></p>
+                      <p class="mb-0"><a aria-label="Reports and Guides" href="/en-us/resources/reports-and-guides.html" class="total-protection-nav-link" data-navelement="reports-and-guides" data-pagesection="top nav"> Reports and Guides </a></p>
+                      <p class="mb-0"><a aria-label="McAfee on YouTube" href="https://www.youtube.com/McAfee" class="total-protection-nav-link" data-navelement="mcafee-on-youtube" data-pagesection="top nav"> McAfee on YouTube </a></p>
+                      <p class="mb-0"><a aria-label="Prevent Spam and Phishing" href="/en-us/cyber-scam/customer-scam-awareness.html" class="total-protection-nav-link" data-navelement="prevent-spam-and-phishing" data-pagesection="top nav"> Prevent Spam and Phishing </a></p>
+                      <h2 class="navHdr">Learn More</h2>
+                      <p class="mb-0"><a aria-label="Learn at McAfee" href="https://www.mcafee.com/learn/" class="total-protection-nav-link" data-navelement="learn-at-mcafee" data-pagesection="top nav"> Learn at McAfee </a></p>
+                      <p class="mb-0"><a aria-label="What is Antivirus?" href="/en-us/antivirus.html" class="total-protection-nav-link" data-navelement="what-is-antivirus" data-pagesection="top nav"> What is Antivirus? </a></p>
+                      <p class="mb-0"><a aria-label="What is a VPN?" href="/en-us/vpn.html" class="total-protection-nav-link" data-navelement="what-is-a-vpn" data-pagesection="top nav"> What is a VPN? </a></p>
+                      <p class="mb-0"><a aria-label="What is Identity Theft?" href="https://www.mcafee.com/en-us/identity-theft.html" class="total-protection-nav-link" data-navelement="what-is-identity-theft" data-pagesection="top nav">What is Identity Theft?</a></p>
+                      <p class="mb-0"><a aria-label="McAfee Business Protection" href="https://www.mcafee.com/learn/mcafee-small-business/" class="total-protection-nav-link" data-navelement="McAfee Business Protection" data-pagesection="top nav">McAfee Business Protection</a></p>
+                      <h2 class="navHdr">Press &amp; News</h2>
+                      <p class="mb-0"><a aria-label="McAfee Newsroom" href="https://www.mcafee.com/en-us/consumer-corporate/newsroom.html" class="total-protection-nav-link" data-navelement="mcafee-newsroom" data-pagesection="top nav"> McAfee Newsroom </a></p>
+                      <p class="mb-0"><a aria-label="AI News &amp; Scams" href="/en-us/ai-news/ai-hub.html" class="total-protection-nav-link" data-navelement="ai-hub" data-pagesection="top nav"> AI News &amp; Scams </a></p>
+                      <p class="mb-0"><a aria-label="AI Hub" href="https://www.mcafee.com/ai/" class="total-protection-nav-link" data-navelement="mcafee-smart-ai-hub" data-pagesection="top nav"> AI Hub </a></p>
+                    </div>
+                  </div>
+                </div>
+                <div id="tnav12">
+                  <a aria-label="About Us" href="#about-us-collapse" class="nav dropdown-toggle mobile-nav-item collapsed" data-navelement="about-us" data-pagesection="top nav" data-bs-display="static" role="button" aria-expanded="false" aria-controls="about-us-collapse" aria-haspopup="true"> About Us </a>
+                  <div class="collapse mobile-navlinks-dropdown" id="about-us-collapse">
+                    <div class="collapse-child">
+                      <h2 class="navHdr">Our Company</h2>
+                      <p class="mb-0"><a aria-label="Company Overview" href="/en-us/consumer-corporate/about.html" class="total-protection-nav-link" data-navelement="company-overview" data-pagesection="top nav">Company Overview </a></p>
+                      <p class="mb-0"><a aria-label="Awards &amp; Reviews" href="/en-us/consumer-corporate/about/awards.html" class="total-protection-nav-link" data-navelement="awards-reviews" data-pagesection="top nav"> Awards &amp; Reviews </a></p>
+                      <p class="mb-0"><a aria-label="Investors" href="/en-us/consumer-corporate/investors.html" class="total-protection-nav-link" data-navelement="investors" data-pagesection="top nav"> Investors </a></p>
+                      <p class="mb-0"><a aria-label="Why McAfee" href="/en-us/why-mcafee.html" class="total-protection-nav-link" data-navelement="why-mcafee" data-pagesection="top nav"> Why McAfee </a></p>
+                      <h2 class="navHdr">Our Efforts</h2>
+                      <p class="mb-0"><a aria-label="Inclusion &amp; Diversity" href="/en-us/consumer-corporate/inclusion-diversity.html" class="total-protection-nav-link" data-navelement="inclusion-diversity" data-pagesection="top nav"> Inclusion &amp; Diversity </a></p>
+                      <p class="mb-0"><a aria-label="Integrity &amp; Ethics" href="/en-us/consumer-corporate/integrity-ethics.html" class="total-protection-nav-link" data-navelement="integrity-ethics" data-pagesection="top nav"> Integrity &amp; Ethics </a></p>
+                      <p class="mb-0"><a aria-label=" Public Policy" href="/en-us/consumer-support/policy/legal/public-policy.html" class="total-protection-nav-link" data-navelement="public-policy" data-pagesection="top nav"> Public Policy </a></p>
+                      <h2 class="navHdr">Join Us</h2>
+                      <p class="mb-0"><a aria-label="Careers" href="https://careers.mcafee.com/" class="total-protection-nav-link" data-navelement="careers" data-pagesection="top nav"> Careers </a></p>
+                      <p class="mb-0"><a aria-label="Life at McAfee" href="https://careers.mcafee.com/life-at-mcafee" class="total-protection-nav-link" data-navelement="life-at-mcafee" data-pagesection="top nav"> Life at McAfee </a></p>
+                      <p class="mb-0"><a aria-label=" Our Teams" href="https://careers.mcafee.com/our-teams" class="total-protection-nav-link" data-navelement="our-teams" data-pagesection="top nav"> Our Teams </a></p>
+                      <p class="mb-0"><a aria-label="Our Locations" href="https://careers.mcafee.com/our-locations" class="total-protection-nav-link" data-navelement="our-locations" data-pagesection="top nav">Our Locations</a></p>
+                    </div>
+                  </div>
+                </div>
+                <div><a aria-label="AI Hub" href="https://www.mcafee.com/ai/" class="nav mobile-nav-item" data-navelement="AI Hub" data-pagesection="top nav" data-bs-display="static" role="button" aria-haspopup="false" style="font-family: Poppins !important; font-weight: 400; font-size: 16px; padding: 12px 16px"> AI Hub </a></div>
+                <div id="tnav8">
+                  <a aria-label="Support" href="#support-collapse" class="nav dropdown-toggle mobile-nav-item collapsed" data-navelement="support" data-pagesection="top nav" data-bs-display="static" role="button" aria-expanded="false" aria-controls="support-collapse" aria-haspopup="true"> Support </a>
+                  <div class="collapse mobile-navlinks-dropdown" id="support-collapse">
+                    <div class="collapse-child">
+                      <h2 class="navHdr">Help</h2>
+                      <p class="mb-0"><a href="#" aria-label="Customer Support" class="total-protection-nav-link" data-navelement="customer-support" data-pagesection="top nav" style="cursor: pointer">Customer Support</a></p>
+                      <p class="mb-0"><a aria-label="Customer Scam Awareness" href="/en-us/cyber-scam/customer-scam-awareness.html" class="total-protection-nav-link" data-navelement="scam-awareness" data-pagesection="top nav"> Customer Scam Awareness </a></p>
+                      <p class="mb-0"><a aria-label="Contact Us" href="/en-us/consumer-corporate/contact-us.html" class="total-protection-nav-link" data-navelement="contact-us" data-pagesection="top nav"> Contact Us </a></p>
+                      <h2 class="navHdr">Activation</h2>
+                      <p class="mb-0"><a aria-label="Activate Retail Card" href="/en-us/consumer-support/activate-product-key.html" class="total-protection-nav-link" data-navelement="activate-retail-card" data-pagesection="top nav"> Activate Retail Card </a></p>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <a aria-label="Fraud Center" href="/en-us/cyber-scam/customer-scam-awareness.html" class="nav mobile-nav-item" data-navelement="Fraud Center" data-pagesection="top nav" data-bs-display="static" role="button" aria-haspopup="false" style="font-family: Poppins !important; font-weight: 400; font-size: 16px; padding: 12px 16px">
+                    Fraud Center
+                  </a>
+                </div>
+              </ul>
+              <div class="mobile-navicons d-none">
+                <ul class="navicons d-lg-none"></ul>
+                <div id="tnav10" class="globe globe-mobile">
+                  <a aria-label="globe icon" href="#region" class="nav dropdown-toggle mobile-nav-item collapsed" data-navelement="region" data-pagesection="top nav" data-bs-display="static" role="button" aria-expanded="false" aria-controls="region" aria-haspopup="true"
+                    ><span class="global-svg"
+                      ><svg aria-label="globe icon" width="23" height="23" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12m2.557 16h-5.115c.546 2.46 1.441 4.114 2.558 5.744 1.194-1.741 2.041-3.41 2.557-5.744m-7.157 0h-4.567c1.236 2.825 3.704 4.972 6.755 5.716-1.048-1.733-1.783-3.658-2.188-5.716m13.767 0h-4.567c-.391 1.988-1.095 3.887-2.175 5.694 3.012-.763 5.517-2.895 6.742-5.694m-14.005-6h-4.962c-.267 1.313-.267 2.685 0 4h4.915c-.119-1.329-.101-2.672.047-4m7.661 0h-5.647c-.165 1.326-.185 2.672-.053 4h5.753c.133-1.328.111-2.673-.053-4m6.977 0h-4.963c.148 1.328.166 2.671.048 4h4.915c.26-1.285.273-2.648 0-4m-12.156-7.729c-3.077.732-5.567 2.886-6.811 5.729h4.653c.435-2.042 1.178-3.985 2.158-5.729m2.355-.048c-1.089 1.77-1.91 3.453-2.463 5.777h4.927c-.534-2.246-1.337-3.948-2.464-5.777m2.368.069c1.013 1.812 1.733 3.76 2.146 5.708h4.654c-1.232-2.816-3.762-4.958-6.8-5.708"></path></svg
+                    ></span>
+                    <div class="ml-3">Region</div></a
+                  >
+                  <div class="collapse mobile-navlinks-dropdown" id="region">
+                    <div class="collapse-child">
+                      <div class="cmp-regionselector">
+                        <div class="row">
+                          <div class="col-12 col-lg-3">
+                            <p class="fw-semibold mb-2" style="color: rgb(102, 112, 133)">ASIA PACIFIC</p>
+                            <hr />
+                            <p><a href="/en-au/index.html">Australia - English</a></p>
+                            <p><a href="/en-nz/index.html">New Zealand - English</a></p>
+                            <p><a href="/en-sg/index.html">Singapore - English</a></p>
+                            <p><a href="/en-my/index.html">Malaysia - English</a></p>
+                            <p><a href="/en-ph/index.html">Philippines - English</a></p>
+                            <p><a href="/en-in/index.html">India - English</a></p>
+                            <p><a href="/id-id/index.html">Indonesia - English</a></p>
+                            <p><a href="/ko-kr/index.html">대한민국 - 한국어</a></p>
+                            <p><a href="/ja-jp/index.html">日本 - 日本語</a></p>
+                            <p><a href="/zh-cn/index.html">中国 - 简体中文</a></p>
+                            <p><a href="/zh-hk/index.html">香港特別行政區 - 繁體中文</a></p>
+                            <p><a href="/zh-tw/index.html">台灣 - 繁體中文</a></p>
+                            <p class="d-block d-lg-none">&nbsp;</p>
+                          </div>
+                          <div class="col-12 col-lg-3">
+                            <p class="fw-semibold mb-2" style="color: rgb(102, 112, 133)">EUROPE</p>
+                            <hr />
+                            <p><a href="/cs-cz/index.html">Česká Republika - Čeština</a></p>
+                            <p><a href="/da-dk/index.html">Danmark - Dansk</a></p>
+                            <p><a href="/fi-fi/index.html">Suomi - Suomi</a></p>
+                            <p><a href="/fr-fr/index.html">France - Français</a></p>
+                            <p><a href="/de-de/index.html">Deutschland - Deutsch</a></p>
+                            <p><a href="/el-gr/index.html">Ελλάδα - Ελληνικά</a></p>
+                            <p><a href="/en-ie/index.html">Ireland - English</a></p>
+                            <p><a href="/hu-hu/index.html">Magyarország - Magyar</a></p>
+                            <p><a href="/en-zw/index.html">ישראל - עברית</a></p>
+                            <p><a href="/it-it/index.html">Italia - Italiano</a></p>
+                            <p><a href="/nl-nl/index.html">Nederland - Nederlands</a></p>
+                          </div>
+                          <div class="col-12 col-lg-3">
+                            <p class="d-none d-lg-block fw-semibold mb-2">&nbsp;</p>
+                            <hr class="d-none d-lg-block" />
+                            <p><a href="/nb-no/index.html">Norge - Bokmål</a></p>
+                            <p><a href="/pl-pl/index.html">Polska - Polski</a></p>
+                            <p><a href="/pt-pt/index.html">Portugal - Português</a></p>
+                            <p><a href="/ru-ru/index.html">Россия - Русский</a></p>
+                            <p><a href="/es-es/index.html">España - Español</a></p>
+                            <p><a href="/sv-se/index.html">Sverige - Svenska</a></p>
+                            <p><a href="/fr-ch/index.html">Suisse - Français</a></p>
+                            <p><a href="/de-ch/index.html">Schweiz - Deutsch</a></p>
+                            <p><a href="/tr-tr/index.html">Türkiye - Türkçe</a></p>
+                            <p><a href="/en-zw/index.html">العربية - العربية</a></p>
+                            <p><a href="/en-gb/index.html">United Kingdom - English</a></p>
+                            <p class="d-block d-lg-none">&nbsp;</p>
+                          </div>
+                          <div class="col-12 col-lg-3">
+                            <p class="fw-semibold mb-2" style="color: rgb(102, 112, 133)">LATIN AMERICA</p>
+                            <hr />
+                            <p><a href="/es-ar/index.html">Argentina - Español</a></p>
+                            <p><a href="/es-pa/index.html">Bolivia - Español</a></p>
+                            <p><a href="/pt-br/index.html">Brasil - Português</a></p>
+                            <p><a href="/es-cl/index.html">Chile - Español</a></p>
+                            <p><a href="/es-co/index.html">Colombia - Español</a></p>
+                            <p><a href="/es-mx/index.html">México - Español</a></p>
+                            <p><a href="/es-pe/index.html">Perú - Español</a></p>
+                            <p>&nbsp;</p>
+                            <p class="fw-semibold mb-2" style="color: rgb(102, 112, 133)">NORTH AMERICA</p>
+                            <hr />
+                            <p><a href="/en-us/index.html">United States - English</a></p>
+                            <p><a href="/en-ca/index.html">Canada - English</a></p>
+                            <p><a href="/fr-ca/index.html">Canada - Français</a></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="tnav9"><!----><a aria-label="Log In" data-navelement="login|top-nav" data-pagesection="store" href="https://www.mcafee.com/login.html" class="entlink rounded-pill nav-cta-mobile" target="_blank">Log In</a></div>
+              </div>
+            </div>
+            <div class="icons-wrap d-flex">
+              <ul class="navlinks d-none d-lg-flex">
+                <li class="tnav-item dropdown" id="tnav3">
+                  <a aria-label="Support" data-navelement="support" data-pagesection="top nav" href="#" class="nav dropdown-toggle support-nav d-flex align-items-center" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true" aria-expanded="false" style="margin-right: 15px; margin-left: 15px">Support </a>
+                  <div class="subnavContainer support-dropdown dropdown-menu" aria-labelledby="tnav3">
+                    <div class="subNavWrapper">
+                      <div class="subnavContent">
+                        <ul class="subnavlinks">
+                          <li>
+                            <h2 class="navHdr">Help</h2>
+                            <ul>
+                              <li class="mb-0"><a href="#" aria-label="Customer Support" class="total-protection-nav-link" data-navelement="customer-support" data-pagesection="top nav" style="cursor: pointer">Customer Support</a></li>
+                              <li class="mb-0"><a aria-label="Customer Scam Awareness" href="/en-us/cyber-scam/customer-scam-awareness.html" class="total-protection-nav-link" data-navelement="scam-awareness" data-pagesection="top nav">Customer Scam Awareness</a></li>
+                              <li class="mb-0"><a aria-label="Contact Us" href="/en-us/consumer-corporate/contact-us.html" class="total-protection-nav-link" data-navelement="contact-us" data-pagesection="top nav">Contact Us</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h2 class="navHdr">Activation</h2>
+                            <ul>
+                              <li class="mb-0"><a aria-label="Activate Retail Card" href="/en-us/consumer-support/activate-product-key.html" class="total-protection-nav-link" data-navelement="activate-retail-card" data-pagesection="top nav">Activate Retail Card</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="tnav-item" id="tnav16"><a aria-label="Fraud Center" data-navelement="Fraud Center" data-pagesection="top nav" href="/en-us/cyber-scam/customer-scam-awareness.html" class="nav d-flex align-items-center" role="button" data-bs-display="static" aria-haspopup="false" style="padding-top: 12px">Fraud Center</a></li>
+              </ul>
+              <ul class="navicons more d-none d-lg-block"></ul>
+              <ul class="navlinks d-none d-lg-flex">
+                <li class="tnav-item dropdown" id="tnav10">
+                  <a aria-label="globe icon" data-navelement="support" data-pagesection="top nav" href="#" class="nav dropdown-toggle support-nav d-flex align-items-center" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true" aria-expanded="false"
+                    ><span class="global-svg"
+                      ><svg width="23" height="23" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12m2.557 16h-5.115c.546 2.46 1.441 4.114 2.558 5.744 1.194-1.741 2.041-3.41 2.557-5.744m-7.157 0h-4.567c1.236 2.825 3.704 4.972 6.755 5.716-1.048-1.733-1.783-3.658-2.188-5.716m13.767 0h-4.567c-.391 1.988-1.095 3.887-2.175 5.694 3.012-.763 5.517-2.895 6.742-5.694m-14.005-6h-4.962c-.267 1.313-.267 2.685 0 4h4.915c-.119-1.329-.101-2.672.047-4m7.661 0h-5.647c-.165 1.326-.185 2.672-.053 4h5.753c.133-1.328.111-2.673-.053-4m6.977 0h-4.963c.148 1.328.166 2.671.048 4h4.915c.26-1.285.273-2.648 0-4m-12.156-7.729c-3.077.732-5.567 2.886-6.811 5.729h4.653c.435-2.042 1.178-3.985 2.158-5.729m2.355-.048c-1.089 1.77-1.91 3.453-2.463 5.777h4.927c-.534-2.246-1.337-3.948-2.464-5.777m2.368.069c1.013 1.812 1.733 3.76 2.146 5.708h4.654c-1.232-2.816-3.762-4.958-6.8-5.708"></path></svg></span
+                  ></a>
+                  <div class="subnavContainer support-dropdown dropdown-menu country-section" aria-labelledby="tnav10">
+                    <div class="subNavWrapper">
+                      <div class="subnavContent">
+                        <div class="cmp-regionselector">
+                          <div class="row">
+                            <div class="col-12 col-lg-3">
+                              <p class="fw-semibold mb-2" style="color: rgb(102, 112, 133)">ASIA PACIFIC</p>
+                              <hr />
+                              <p><a href="/en-au/index.html">Australia - English</a></p>
+                              <p><a href="/en-nz/index.html">New Zealand - English</a></p>
+                              <p><a href="/en-sg/index.html">Singapore - English</a></p>
+                              <p><a href="/en-my/index.html">Malaysia - English</a></p>
+                              <p><a href="/en-ph/index.html">Philippines - English</a></p>
+                              <p><a href="/en-in/index.html">India - English</a></p>
+                              <p><a href="/id-id/index.html">Indonesia - English</a></p>
+                              <p><a href="/ko-kr/index.html">대한민국 - 한국어</a></p>
+                              <p><a href="/ja-jp/index.html">日本 - 日本語</a></p>
+                              <p><a href="/zh-cn/index.html">中国 - 简体中文</a></p>
+                              <p><a href="/zh-hk/index.html">香港特別行政區 - 繁體中文</a></p>
+                              <p><a href="/zh-tw/index.html">台灣 - 繁體中文</a></p>
+                              <p class="d-block d-lg-none">&nbsp;</p>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                              <p class="fw-semibold mb-2" style="color: rgb(102, 112, 133)">EUROPE</p>
+                              <hr />
+                              <p><a href="/cs-cz/index.html">Česká Republika - Čeština</a></p>
+                              <p><a href="/da-dk/index.html">Danmark - Dansk</a></p>
+                              <p><a href="/fi-fi/index.html">Suomi - Suomi</a></p>
+                              <p><a href="/fr-fr/index.html">France - Français</a></p>
+                              <p><a href="/de-de/index.html">Deutschland - Deutsch</a></p>
+                              <p><a href="/el-gr/index.html">Ελλάδα - Ελληνικά</a></p>
+                              <p><a href="/en-ie/index.html">Ireland - English</a></p>
+                              <p><a href="/hu-hu/index.html">Magyarország - Magyar</a></p>
+                              <p><a href="/en-zw/index.html">ישראל - עברית</a></p>
+                              <p><a href="/it-it/index.html">Italia - Italiano</a></p>
+                              <p><a href="/nl-nl/index.html">Nederland - Nederlands</a></p>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                              <p class="d-none d-lg-block fw-semibold mb-2">&nbsp;</p>
+                              <hr class="d-none d-lg-block" />
+                              <p><a href="/nb-no/index.html">Norge - Bokmål</a></p>
+                              <p><a href="/pl-pl/index.html">Polska - Polski</a></p>
+                              <p><a href="/pt-pt/index.html">Portugal - Português</a></p>
+                              <p><a href="/ru-ru/index.html">Россия - Русский</a></p>
+                              <p><a href="/es-es/index.html">España - Español</a></p>
+                              <p><a href="/sv-se/index.html">Sverige - Svenska</a></p>
+                              <p><a href="/fr-ch/index.html">Suisse - Français</a></p>
+                              <p><a href="/de-ch/index.html">Schweiz - Deutsch</a></p>
+                              <p><a href="/tr-tr/index.html">Türkiye - Türkçe</a></p>
+                              <p><a href="/en-zw/index.html">العربية - العربية</a></p>
+                              <p><a href="/en-gb/index.html">United Kingdom - English</a></p>
+                              <p class="d-block d-lg-none">&nbsp;</p>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                              <p class="fw-semibold mb-2" style="color: rgb(102, 112, 133)">LATIN AMERICA</p>
+                              <hr />
+                              <p><a href="/es-ar/index.html">Argentina - Español</a></p>
+                              <p><a href="/es-pa/index.html">Bolivia - Español</a></p>
+                              <p><a href="/pt-br/index.html">Brasil - Português</a></p>
+                              <p><a href="/es-cl/index.html">Chile - Español</a></p>
+                              <p><a href="/es-co/index.html">Colombia - Español</a></p>
+                              <p><a href="/es-mx/index.html">México - Español</a></p>
+                              <p><a href="/es-pe/index.html">Perú - Español</a></p>
+                              <p>&nbsp;</p>
+                              <p class="fw-semibold mb-2" style="color: rgb(102, 112, 133)">NORTH AMERICA</p>
+                              <hr />
+                              <p><a href="/en-us/index.html">United States - English</a></p>
+                              <p><a href="/en-ca/index.html">Canada - English</a></p>
+                              <p><a href="/fr-ca/index.html">Canada - Français</a></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <ul class="navicons navbutton">
+                <li id="tnav9" class="dropdown"><!----><a aria-label="Log In" data-navelement="login|top-nav" data-pagesection="store" href="https://www.mcafee.com/login.html" class="entlink rounded-pill nav-cta" target="_blank">Log In</a></li>
+              </ul>
+            </div>
+            <div class="icons-wrap">
+              <div class="d-flex justify-content-start align-items-center flex-row-reverse">
+                <a href="#" class="hamburger-btn hamburger-newnav-btn" aria-label="Hamburger icon"><span></span><span></span><span></span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- hero -->
+     <picture>
+            <source type="image/avif" srcset="assets/images/hero-desktop-orig-jpg.avif 1200w, assets/images/hero-mobile.avif 800w" />
+            <source type="image/webp" srcset="assets/images/hero-desktop-orig-jpg.webp 1200w, assets/images/hero-mobile.webp 800w" />
+            <source type="image/avif" srcset="assets/images/hero-desktop-orig-jpg.avif 1200w, assets/images/hero-mobile.avif 800w" />
+            <img fetchpriority="high" src="assets/images/hero-desktop-orig-jpg.jpg" alt="desktop hero" />
+          </picture>
+          <picture>
+            <!-- <source srcset="assets/images/shield-red.svg" media="(prefers-color-scheme: light)" /> -->
+            <source srcset="assets/images/shield-white.png" media="(prefers-color-scheme: dark)" />
+            <!-- <img type="image/svg+xml" src="assets/images/shield-red.svg" alt="red shield" width="200" height="100" /> -->
+            <img src="assets/images/shield-red.png" alt="red shield" />
+          </picture>
+    <div id="mcafeeHeroCarousel" class="carousel slide carousel-fade no-min-height" data-bs-ride="carousel">
+      <div class="d-none"></div>
+      <div class="carousel-inner">
+        <div class="carousel-item" data-bs-interval="5000">
+          <picture>
+            <source type="image/avif" srcset="assets/images/hero-desktop-orig-jpg.avif 1200w, assets/images/hero-mobile.avif 800w" />
+            <source type="image/webp" srcset="assets/images/hero-desktop-orig-jpg.webp 1200w, assets/images/hero-mobile.webp 800w" />
+            <source type="image/avif" srcset="assets/images/hero-desktop-orig-jpg.avif 1200w, assets/images/hero-mobile.avif 800w" />
+            <source srcset="assets/images/shield-red.svg" media="(prefers-color-scheme: light)" />
+            <source srcset="assets/images/shield-white.png" media="(prefers-color-scheme: dark)" />
+            <img fetchpriority="high" src="assets/images/hero-desktop-orig-jpg.jpg" alt="desktop hero" />
+          </picture>
+          <div class="hero__contentWrapper">
+            <div class="hero__content">
+              <div style="display: inline-block; width: 55%"><img src="https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en-us/mcafee-redesign/homepage/new-badge.svg" class="img-fluid" alt="new" /></div>
+              <h2 class="hero__title">Real or fake?&nbsp;<br />Scam Detector knows.</h2>
+              <div class="hero__desc">Get automatic alerts to text, email, and video scams, now included in McAfee plans.</div>
+              <div class="hero__ctaGroup d-flex">
+                <div class="hero__cta mr-3 mb-3"><a data-pagesection="store" data-navelement="see-plans|msd" aria-label="See Plans" href="#planComparator">See Plans</a></div>
+                <div class="hero__cta"><button data-pagesection="store" data-navelement="helpmechoose|msd" aria-label="Help Me Choose" data-bs-toggle="modal" data-bs-target="#HelpMeWidget_Modal" class="nav-cta rounded-pill">Help Me Choose</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="5000" style="--bg-image: url(https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en-us/mcafee-redesign/homepage/Hero-new-ratio_1.jpg); --bg-m-image: url(https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en-us/mcafee-redesign/homepage/hero1-mobile.jpg); height: 1012.03px" aria-hidden="true">
+          <div class="hero__contentWrapper">
+            <div class="hero__content">
+              <h1 class="hero__title">McAfee AI-Powered Antivirus + Identity &amp; Privacy <span>Protection</span></h1>
+              <div class="hero__desc">Keep personal info private, avoid scams, and protect yourself online with the #1 antivirus for PC performance<sup>++</sup></div>
+              <div class="hero__ctaGroup d-flex">
+                <div class="hero__cta mr-3 mb-3"><a data-pagesection="store" data-navelement="see-plans|privacy" aria-label="See Plans" href="#planComparator">See Plans</a></div>
+                <div class="hero__cta"><button data-pagesection="store" data-navelement="helpmechoose|privacy" aria-label="Help Me Choose" data-bs-toggle="modal" data-bs-target="#HelpMeWidget_Modal" class="nav-cta rounded-pill">Help Me Choose</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="5000" style="--bg-image: url(https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en-us/mcafee-redesign/homepage/Hero-new-ratio_2.jpg); --bg-m-image: url(https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en-us/mcafee-redesign/homepage/hero2-mobile.jpg); height: 1012.03px" aria-hidden="true">
+          <div class="hero__contentWrapper">
+            <div class="hero__content">
+              <h2 class="hero__title">Worry-free, all-in-one online protection for your <span>identity</span></h2>
+              <div class="hero__desc">Keep personal info private, avoid scams, and protect yourself online with the #1 antivirus for PC performance<sup>++</sup></div>
+              <div class="hero__ctaGroup d-flex">
+                <div class="hero__cta mr-3 mb-3"><a data-pagesection="store" data-navelement="see-plans|identity" aria-label="See Plans" href="/en-us/identity-theft/protection.html">See Plans</a></div>
+                <div class="hero__cta"><button data-pagesection="store" data-navelement="helpmechoose|identity" aria-label="Help Me Choose" data-bs-toggle="modal" data-bs-target="#HelpMeWidget_Modal" class="nav-cta rounded-pill">Help Me Choose</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="carousel-item active"
+          data-bs-interval="5000"
+          style="--bg-image: url(https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en-us/mcafee-redesign/homepage/Hero-new-ratio_3.jpg); --bg-m-image: url(https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en-us/mcafee-redesign/homepage/hero3-mobile.jpg); height: 1012.03px"
+          aria-hidden="false">
+          <div class="hero__contentWrapper">
+            <div class="hero__content">
+              <h2 class="hero__title">Worry-free, all-in-one online protection for your <span>family</span></h2>
+              <div class="hero__desc">Keep personal info private, avoid scams, and protect yourself online with the #1 antivirus for PC performance<sup>++</sup></div>
+              <div class="hero__ctaGroup d-flex">
+                <div class="hero__cta mr-3 mb-3"><a data-pagesection="store" data-navelement="see-plans|family" aria-label="See Plans" href="/en-us/identity-theft/family.html">See Plans</a></div>
+                <div class="hero__cta"><button data-pagesection="store" data-navelement="helpmechoose|family" aria-label="Help Me Choose" data-bs-toggle="modal" data-bs-target="#HelpMeWidget_Modal" class="nav-cta rounded-pill">Help Me Choose</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="5000" style="--bg-image: url(https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en-us/mcafee-redesign/homepage/Hero-new-ratio_4.jpg); --bg-m-image: url(https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en-us/mcafee-redesign/homepage/hero4-mobile.jpg); height: 1012.03px" aria-hidden="true">
+          <div class="hero__contentWrapper">
+            <div class="hero__content">
+              <h2 class="hero__title">Worry-free, all-in-one protection for your <span>online life</span></h2>
+              <div class="hero__desc">Keep personal info private, avoid scams, and protect yourself online with the #1 antivirus for PC performance<sup>++</sup></div>
+              <div class="hero__ctaGroup d-flex">
+                <div class="hero__cta mr-3 mb-3"><a data-pagesection="store" data-navelement="see-plans|onlinelife" aria-label="See Plans" href="#planComparator">See Plans</a></div>
+                <div class="hero__cta"><button data-pagesection="store" data-navelement="helpmechoose|onlinelife" aria-label="Help Me Choose" data-bs-toggle="modal" data-bs-target="#HelpMeWidget_Modal" class="nav-cta rounded-pill">Help Me Choose</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel__controls">
+        <button class="carousel-control-prev" type="button" data-bs-target="#mcafeeHeroCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button
+        ><button class="carousel-control-next" type="button" data-bs-target="#mcafeeHeroCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
+</html>
