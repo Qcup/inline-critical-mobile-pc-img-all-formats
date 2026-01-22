@@ -328,6 +328,12 @@
         --TypographyHeaderXxsFontWeight: 400;
         --TypographyHeaderXxxsFontWeight: 400;
       }
+      picture img.hero {
+        height: 80svh;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
       /* nav */
       hr {
         margin: 1rem 0;
@@ -3305,6 +3311,13 @@
           max-height: 88vh;
         }
       }
+
+      picture .logo {
+        display: block;
+        width: 3rem;
+        height: auto;
+        border: 1px solid red;  
+      }
     </style>
     <!-- 3. Your mobile-first CSS -->
     <!-- <link rel="stylesheet" href="css/mobile.css">  -->
@@ -3315,6 +3328,12 @@
     <noscript><link rel="stylesheet" href="style.css" /></noscript>
   </head>
   <body>
+        <!-- test images for dark mode -->
+    <picture>
+      <source srcset="assets/images/shield-red.png" media="(prefers-color-scheme: dark)">
+   
+      <img class="logo" src="assets/images/shield-white.png" alt="Site logo">
+    </picture>
     <!-- nav -->
     <div class="header new-header is-fixed makeHeaderTransparent">
       <!---->
@@ -3852,12 +3871,6 @@
       </div>
     </div>
 
-    <!-- test images for dark mode -->
-    <picture>
-      <source srcset="assets/images/shield-white.png" media="(prefers-color-scheme: dark)">
-      <source srcset="assets/images/shield-red.png" media="(prefers-color-scheme: light)">
-      <img src="assets/images/shield-red.png" alt="Site logo">
-    </picture>
 
 
 
@@ -3872,21 +3885,22 @@
       <!-- Desktop -->
       <source srcset="assets/images/hero.webp" type="image/webp" alt="Hero image" />
       <!-- Fallback -->
-      <img fetchpriority="high" src="assets/images/hero.jpg" alt="Hero image" />
+      <img class="hero" fetchpriority="high" src="assets/images/hero.jpg" alt="Hero image" />
     </picture>
-    
+
     <div id="mcafeeHeroCarousel" class="carousel slide carousel-fade no-min-height" data-bs-ride="carousel">
       <div class="d-none"></div>
       <div class="carousel-inner">
         <div class="carousel-item" data-bs-interval="5000">
-          <picture>
-            <source type="image/avif" srcset="assets/images/hero-desktop-orig-jpg.avif 1200w, assets/images/hero-mobile.avif 800w" />
-            <source type="image/webp" srcset="assets/images/hero-desktop-orig-jpg.webp 1200w, assets/images/hero-mobile.webp 800w" />
-            <source type="image/avif" srcset="assets/images/hero-desktop-orig-jpg.avif 1200w, assets/images/hero-mobile.avif 800w" />
-            <source srcset="assets/images/shield-red.svg" media="(prefers-color-scheme: light)" />
-            <source srcset="assets/images/shield-white.png" media="(prefers-color-scheme: dark)" />
-            <img fetchpriority="high" src="assets/images/hero-desktop-orig-jpg.jpg" alt="desktop hero" />
-          </picture>
+          
+          <!-- <picture>
+            <!-- Mobile first -->
+            <source srcset="assets/images/hero-mobile.webp" type="image/webp" media="(max-width: 600px)" alt="Hero image" />
+            <!-- Desktop -->
+            <source srcset="assets/images/hero.webp" type="image/webp" alt="Hero image" />
+            <!-- Fallback -->
+            <img class="hero" fetchpriority="high" src="assets/images/hero.jpg" alt="Hero image" />
+          </picture> -->
           <div class="hero__contentWrapper">
             <div class="hero__content">
               <div style="display: inline-block; width: 55%"><img src="https://media.mcafeeassets.com/content/dam/npcld/ecommerce/en-us/mcafee-redesign/homepage/new-badge.svg" class="img-fluid" alt="new" /></div>
